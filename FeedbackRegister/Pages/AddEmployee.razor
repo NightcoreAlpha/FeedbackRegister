@@ -1,0 +1,94 @@
+﻿@page "/AddEmployee/{name}/{email}/{roleid}"
+
+@using static FeedbackRegister.Data.DataGridService
+@using static FeedbackRegister.Pages.Counter
+@inject NavigationManager navigationManager
+@using Microsoft.AspNetCore.WebUtilities
+@inject Counter counter;
+
+
+<h2>@person</h2>
+<div class="nav-item pt-1 pb-3">
+            <NavLink class="" href="Counter">
+                    <button class='btn btn-secondary'>Отмена</button>
+            </NavLink>
+</div>
+    <p>
+  <label>Имя: </label>
+    <input type="text" name="namebox" value=@name/>@name2
+    </p>
+    <p>
+    <label>Email: </label>
+      <input type="text" name="emailbox" value=@email/>
+    </p>
+    <p>
+    <label>Должность: </label>
+      <input type="text" name="professionbox" value=@roleid/>
+    </p>
+    <p>
+    <label>Телефон: </label>
+      <input type="text" name="telefonbox" value=@telefon/>
+    </p>
+    <p>
+    <label>Деактивирована: </label>
+      <input type="checkbox" name="deactbox" value=@deactivation/>
+    </p>
+
+@code {
+    public string? name2 { get; set; }
+    //string? email { get; set; }
+    //string? role { get; set; }
+    //string? telefon { get; set; }
+    //string? selectedEmployees;
+    string person = "Новая запись";
+    protected override void OnInitialized()
+    {
+
+        base.OnInitialized();
+        //if (selectedEmployees2 != null)
+            //name = selectedEmployees2[0].name;
+        //selectedEmployees2 = counter.selectedEmployees;
+        //name = (string)counter.getRowValue();
+        //selectedEmployees = counter.getRowValue();
+        var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri); //you can use IURIHelper for older versions
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("name", out var name))
+        {
+            var token_par = name.First();
+        }
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("email", out var email))
+        {
+            var userid_par = email.First();
+        }
+    }
+    /*public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        foreach (var param in parameters)
+        {
+            var test = param.Value;
+            if (param.Name == nameof(name) && (string)param.Value != name)
+            {
+                //await SomeAsyncMethod();
+            }
+        }
+        //await base.SetParametersAsync(parameters);
+    }*/
+    [Parameter]
+    public Guid id { get; set; }
+    [Parameter]
+    public string? name { get; set; }
+    [Parameter]
+    public string? email { get; set; }
+    [Parameter]
+    public string? telefon { get; set; }
+    [Parameter]
+    public string? deactivation { get; set; }
+    [Parameter]
+    public string? roleid { get; set; }
+    [Parameter]
+    public ParameterView data { get; set; }
+
+    public IList<CounterEmployee>? selectedEmployees2 { get; set; }
+
+}

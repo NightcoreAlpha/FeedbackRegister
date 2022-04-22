@@ -1,0 +1,30 @@
+﻿@page "/"
+@using static FeedbackRegister.Data.ConnectClass
+
+@code{
+    string tst { get; set;}
+     protected override void OnInitialized()
+    {
+        test();
+        base.OnInitialized();
+    }
+    void test()
+    {
+        using (var db = new ConnectContext())
+        {
+            var test = db.employees?.ToList();
+            /*foreach (var c in test)
+            {
+                tst = c.name;
+            }
+            var ghj = "ntcnbv";*/
+        }
+    }
+}
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!@tst</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />

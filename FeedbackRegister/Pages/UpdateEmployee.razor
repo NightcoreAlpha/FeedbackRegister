@@ -1,0 +1,35 @@
+﻿@page "/UpdateEmployee/{id}"
+@using FeedbackRegister.Data
+@using static FeedbackRegister.Data.DataGridService
+@using static FeedbackRegister.Data.GetDataClass
+@using static FeedbackRegister.Pages.Counter
+@using static FeedbackRegister.Data.ConnectClass
+@inject Counter counter
+@inject GetDataClass getDataClass
+
+<h3>@name</h3>
+@if(selectedEmployees != null){
+    @*<AddEmployee name=@selectedEmployees[0].name email=@selectedEmployees[0].email></AddEmployee>*@
+}
+else
+{
+    <span style="color:red; font-size: 40px">Error: Нет данных</span>
+}
+@code {
+    string? name { get; set; }
+    IList<Employee> selectedEmployees = new List<Employee>();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        if (id != null)
+        {
+            selectedEmployees = getDataClass.getEmployee(new Guid(id));
+        }
+        
+        //name = selectedEmployees[0].name;
+        //selectedEmployees = employee.Take(1).ToList();
+
+    }
+    [Parameter]
+    public string? id { get; set; }
+}

@@ -1,0 +1,190 @@
+﻿@page "/counter"
+@using static FeedbackRegister.Data.ConnectClass
+@using FeedbackRegister.Data
+@using System.Collections
+@using static FeedbackRegister.Data.DataGridService
+@using Microsoft.EntityFrameworkCore
+@using Radzen
+@using Radzen.Blazor
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.WebUtilities
+
+@inject DataGridService dataGridService;
+
+<PageTitle>Сотрудники</PageTitle>
+
+<h2>Сотрудники</h2>
+@if(employee == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @*<div style="display: flex; align-items: center; margin-bottom: 16px">
+    @if (selectedEmployees?.Any() == true)
+    {
+    <div style="margin-left: 16px">
+        Selected Employee: @selectedEmployees[0].name
+    </div>
+    }
+    </div>*@
+    <div class="nav-item pt-1 pb-3">
+            <NavLink href="AddEmployee">
+                    <button class='btn btn-primary'>Добавить сотрудника</button>
+            </NavLink>
+        </div>
+
+    <RadzenDataGrid  AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" Visible="@dataGridVisible"
+    AllowSorting="true" TItem="CounterEmployee" Data="employee" SelectionMode="DataGridSelectionMode.Single"  ColumnWidth="150px" @bind-Value=@selectedEmployees RowDoubleClick=@getRowValue ondblclick="href'">
+        <Columns>
+            <RadzenDataGridColumn  TItem="CounterEmployee" Property="id" Title="ID" Visible="false"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="CounterEmployee" Property="name" Title="Имя" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="CounterEmployee" Property="email" Title="Email" Width="100px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="CounterEmployee" Property="telefon" Title="Телефон" Width="100px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="CounterEmployee" Property="deactivation" Title="Деактивирован" Width="50px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="CounterEmployee" Property="roleName" Title="Role"></RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+    <br />
+    <h3>Query String Demo</h3>
+
+<button @onclick="Navigate">Click</button>
+
+<div>Name = @name2</div>
+
+@code{
+    string name2 { get; set; }
+    void Navigate()
+    {
+        var query = new Dictionary<string, string> { { "name", "Mike" } };
+        NavigationManager.NavigateTo(QueryHelpers.AddQueryString(NavigationManager.Uri, query));
+        
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("name", out var param))
+        {
+            name = param.First();
+        }
+    }
+
+}
+    <br />
+
+<p role="status">Количество сотрудников: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    string  tag = "<AddEmployee></AddEmployee>";
+    string? name { get; set; }
+    string? email { get; set; }
+    string? role { get; set; }
+    string? telefon { get; set; }
+    public ParameterView param { get; set; }
+    //step 1
+    AddEmployee addEmployee;
+
+    bool dataGridVisible = true;
+    public IList<CounterEmployee> selectedEmployees;
+    public IList<CounterEmployee> selectedEmployees2;
+    List<CounterEmployee> employee;
+    //List<CounterEmployee> employee33 = new List<CounterEmployee>();    
+    private int? currentCount = 0;
+    bool? visible { get; set; }
+
+    protected override void OnInitialized()
+    {
+
+        base.OnInitialized();
+
+        IncrementCount();
+        employee = (List<CounterEmployee>)dataGridService.EmployeeList().ToList();
+        selectedEmployees = employee.Take(1).ToList();
+
+    }
+    public void getRowValue()
+    {
+        if (selectedEmployees[0] != null)
+        {
+            //NavigationManager.NavigateTo("AddEmployee/"+selectedEmployees[0].id.ToString());
+            //var newUri = NavigationManager.GetUriWithQueryParameter("AddEmployee", "123");
+            addEmployee = new AddEmployee();
+            //NavigationManager.GetUriWithQueryParameter("name", selectedEmployees[0].name.ToString());
+            //addEmployee.name = "123";
+            //addEmployee.name2 = "123";
+            //this.addEmployee.name = "4567";
+            //addEmployee.
+            string str = "";
+            //addEmployee.selectedEmployees2.Clear();
+            NavigationManager.NavigateTo("AddEmployee/"+selectedEmployees[0].name+"/"+selectedEmployees[0].email+"/"+selectedEmployees[0].roleName);
+            addEmployee.selectedEmployees2 = selectedEmployees;
+
+            //ParameterView pv = new ParameterView();
+            //IComponent test = selectedEmployees.ToList();
+
+            //var nameObj = (ParameterView)selectedEmployees;
+            //object nameObj = new object();
+            //nameObj = selectedEmployees;
+            //pv.SetParameterProperties(nameObj);
+            //addEmployee.SetParametersAsync(pv);
+            
+            /*bool Cascading = false;
+            string Name = "name";
+            string Value = "123456";
+            object[] obj = { Cascading = false, Name = "name", Value = "ghghghgh"};
+            addEmployee.SetParametersAsync(obj);
+            param.SetParameterProperties(param);*/
+            //param.SetParameterProperties(new object { "name", "123" }) ;
+
+
+        }
+    }
+    [Parameter]
+    public string Input { get; set; }
+
+    protected string Message = "";
+    //private string _previousInput = null;
+
+    /*protected override async Task OnParametersSetAsync()
+    {
+        Input = "mess";
+            await SomeAsyncMethod();
+    }*/
+    /*private async Task SomeAsyncMethod()
+    {
+        Message = $"Async method was called at {DateTime.Now}";
+        name = "1123456";
+        await Task.CompletedTask;
+    }*/
+    public IList<CounterEmployee> getSelectedEmployees()
+    {
+        return selectedEmployees;
+    }
+    /*protected override async Task OnInitializedAsync()
+        {
+        employee33 = await Task.Run(() => dataGridService.EmployeeList());
+        //return base.OnInitializedAsync();
+    }*/
+    private void IncrementCount()
+    {
+        using (var db = new ConnectContext())
+        {
+            currentCount = (db.employees?.ToList().Count != 0) ? db.employees?.ToList().Count : 0;
+        }
+        if (visible == true)
+        {
+            dataGridVisible = false;
+            visible = false;
+        }
+        else
+        {
+            dataGridVisible = true;
+            visible = true;
+        }
+    }
+    }
+@if (visible == true)
+{
+    <button class='btn btn-primary' >Добавить сотрудника</button>
+}

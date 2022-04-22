@@ -1,0 +1,70 @@
+﻿@page "/TaskList"
+
+@using static FeedbackRegister.Data.ConnectClass
+
+
+
+<PageTitle>TaskList</PageTitle>
+
+<h3>TaskList</h3>
+
+<span>123</span>
+<br/>
+
+<input type="text" style="width:250px" @bind="perem" id="t1" name="t2"/>
+<br />
+<span>Результат: @perem</span>
+<br/>
+<p><label>Имя: </label>
+</p>
+<br/>
+<button class="btn btn-primary" @onclick="setfield">Кнопка для тестов</button>
+<br /><br />
+
+<input type="text" value="@field"/>
+
+@code {
+    public string perem { get; set; }
+    public string field { get; set; }
+    protected override void OnInitialized()
+    {
+        setPerem();
+        base.OnInitialized();
+    }
+    private void setPerem()
+    {
+
+        using(var db = new ConnectContext())
+        {
+            /*var testperem = db.test_product.ToList();
+            foreach (var c in testperem)
+                {
+                perem = c.name;
+            }*/
+        }
+    }
+    void tata()
+    {
+        Console.WriteLine("My debug output.");
+        //Console.WriteLine("FN");
+        //perem = "ATATATA";
+    }
+    void setfield()
+    {
+        field = perem;
+        using(var db = new ConnectContext())
+        {
+            var employee = db.employees?.ToList();
+            foreach(Employee e in employee)
+            {
+                
+            }
+
+            /*var testperem = db.test_product.ToList();
+            foreach (var c in testperem)
+                {
+                perem = c.name;
+            }*/
+        }
+    }
+    }
