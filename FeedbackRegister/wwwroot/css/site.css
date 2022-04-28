@@ -62,3 +62,8 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.column_height_class table td:first-child {
+    line-height: 75px;
+    /*table td:first-child*/
+}

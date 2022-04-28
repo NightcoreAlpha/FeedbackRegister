@@ -8,8 +8,8 @@ namespace FeedbackRegister.Data
 {
     public class GetDataClass
     {
-        public List<Employee> employee = new List<Employee>();
-        Employee employeeOne = new Employee();
+        public List<Employee>? employee = new List<Employee>();
+        public List<Role>? role = new List<Role>();
         public List<Employee> getEmployee(Guid id)
         {
             using(var db = new ConnectContext())
@@ -17,6 +17,14 @@ namespace FeedbackRegister.Data
                 employee = db.employees?.Where(x => x.id == id).ToList();
             }
             return employee;
+        }
+        public List<Role> getRoleList()
+        {
+            using (var db = new ConnectContext())
+            {
+                role = db.roles?.ToList();
+            }
+            return role;
         }
     }
 }

@@ -6,10 +6,62 @@
 @using static FeedbackRegister.Data.ConnectClass
 @inject Counter counter
 @inject GetDataClass getDataClass
+@inject NavigationManager NavigationManager
 
-<h3>@name</h3>
-@if(selectedEmployees != null){
-    @*<AddEmployee name=@selectedEmployees[0].name email=@selectedEmployees[0].email></AddEmployee>*@
+<div class="nav-item pt-1 pb-3">
+            <NavLink class="" href="Counter">
+                    <button class='btn btn-success' onclick=@editEmployee>Сохранить</button>
+            </NavLink>
+            <NavLink class="" href="Counter">
+                    <button class='btn btn-secondary' onclick=@goBack>Отмена</button>
+            </NavLink>
+</div>
+<h3>@nameEmployee</h3>
+<br />
+@if (selectedEmployees != null)
+{
+    <p>
+        <label>Имя: </label>
+        <input type="text" name="namebox" @bind=@nameEmployee/>
+    </p>
+    <p>
+        <label>Email: </label>
+        <input type="text" name="emailbox" @bind=@emailEmployee/>
+    </p>
+    <p>
+        <p>
+            <label>Телефон: </label>
+            <input type="text" name="telefonbox" @bind=@telefonEmployee/>
+        </p>
+        @if (roleList.Count > 0)
+        {
+            <label>Должность: </label>
+            <select name="professionbox" @bind=@roleidEmployee>
+                <option value="" selected disabled>Выберите специальность</option>
+                @foreach (var c in roleList)
+                {
+                    /*if (selectedEmployees[0].roleid == c.id)
+                    {
+                        roleId = c.id;
+                        InputAttributes = new Dictionary<string, object>()
+                            {
+                                {"selected", "selected" }
+                            };
+                }
+                    else
+                    {
+                        InputAttributes = new Dictionary<string, object>();
+                    }*/
+                    <option @attributes=@InputAttributes>@c.roleName</option>
+                }
+
+            </select>
+        }
+    </p>
+    <p>
+        <label>Деактивирована: </label>
+        <input type="checkbox" name="deactbox" @bind=@deactivationEmployee/>
+    </p>
 }
 else
 {
@@ -17,19 +69,64 @@ else
 }
 @code {
     string? name { get; set; }
+    List<Role>? roleList = new List<Role>();
     IList<Employee> selectedEmployees = new List<Employee>();
+    public Dictionary<string, object> InputAttributes { get; set; } =
+        new Dictionary<string, object>()
+        {
+            {"selected", "selected" }
+        };  
     protected override void OnInitialized()
     {
         base.OnInitialized();
         if (id != null)
         {
+            roleList = getDataClass.getRoleList();
             selectedEmployees = getDataClass.getEmployee(new Guid(id));
         }
-        
-        //name = selectedEmployees[0].name;
+
+        nameEmployee = selectedEmployees[0].name;
+        emailEmployee = selectedEmployees[0].email;
+        telefonEmployee = selectedEmployees[0].telefon;
+        //roleidEmployee = selectedEmployees[0].roleid;
+        deactivationEmployee = selectedEmployees[0].deactivation;
         //selectedEmployees = employee.Take(1).ToList();
 
     }
+    void editEmployee()
+    {
+        using(var db = new ConnectContext())
+        {
+            List<Role>? idRole = roleList.Where(x => x?.roleName == roleidEmployee).ToList();
+            var employee = db?.employees?.Where(x => x.id == new Guid(id)).ToList();
+            employee[0].name = nameEmployee;
+            employee[0].email = emailEmployee;
+            employee[0].telefon = telefonEmployee;
+            employee[0].deactivation = deactivationEmployee;
+            employee[0].role = idRole[0];
+            if (/*roleidEmployee != "" && roleId != Guid.Empty*/ idRole.Count > 0)
+            {
+                //employee[0].roleid = idRole[0].id;
+            }
+            db.SaveChanges();
+        }
+        NavigationManager.NavigateTo("Counter");
+    }
+    void goBack() => NavigationManager.NavigateTo("Counter");
     [Parameter]
     public string? id { get; set; }
+    [Parameter]
+    public string? idEmployee { get; set; }
+    [Parameter]
+    public string? nameEmployee { get; set; }
+    [Parameter]
+    public string? emailEmployee { get; set; } = "";
+    [Parameter]
+    public string? telefonEmployee { get; set; } = "";
+    [Parameter]
+    public bool? deactivationEmployee { get; set; } = false;
+    [Parameter]
+    public string? roleidEmployee { get; set; } = "";
+    [Parameter]
+    public Guid? roleId { get; set; }
 }
