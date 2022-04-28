@@ -1,94 +1,94 @@
-﻿@page "/AddEmployee/{name}/{email}/{roleid}"
+﻿@page "/AddEmployee"
 
 @using static FeedbackRegister.Data.DataGridService
 @using static FeedbackRegister.Pages.Counter
-@inject NavigationManager navigationManager
-@using Microsoft.AspNetCore.WebUtilities
 @inject Counter counter;
-
+@using static FeedbackRegister.Data.ConnectClass;
+@inject FeedbackRegister.Data.GetDataClass getDataClass
 
 <h2>@person</h2>
 <div class="nav-item pt-1 pb-3">
+            <NavLink class="" href="Counter">
+                    <button class='btn btn-success' onclick=@addEmployee>Сохранить</button>
+            </NavLink>
             <NavLink class="" href="Counter">
                     <button class='btn btn-secondary'>Отмена</button>
             </NavLink>
 </div>
     <p>
   <label>Имя: </label>
-    <input type="text" name="namebox" value=@name/>@name2
+    <input type="text" name="namebox" @bind=@nameEmployee/>
     </p>
     <p>
     <label>Email: </label>
-      <input type="text" name="emailbox" value=@email/>
+    <input type="text" name="emailbox" @bind=@emailEmployee/>
     </p>
     <p>
-    <label>Должность: </label>
-      <input type="text" name="professionbox" value=@roleid/>
-    </p>
     <p>
     <label>Телефон: </label>
-      <input type="text" name="telefonbox" value=@telefon/>
+    <input type="text" name="telefonbox" @bind=@telefonEmployee/>
+    </p>
+    @if (roleList.Count > 0)
+    {
+        <label>Должность: </label>
+        <select name="professionbox" @bind=@roleidEmployee>
+            <option value="" selected disabled>Выберите специальность</option>
+            @foreach (var c in roleList)
+            {
+                <option>@c.roleName</option>
+            }
+        </select>
+    }
     </p>
     <p>
     <label>Деактивирована: </label>
-      <input type="checkbox" name="deactbox" value=@deactivation/>
+    <input type="checkbox" name="deactbox" @bind=@deactivationEmployee/>
     </p>
-
+    <span>@message</span>
 @code {
-    public string? name2 { get; set; }
     //string? email { get; set; }
     //string? role { get; set; }
     //string? telefon { get; set; }
     //string? selectedEmployees;
     string person = "Новая запись";
+    List<Role> roleList = new List<Role>();
     protected override void OnInitialized()
     {
-
         base.OnInitialized();
-        //if (selectedEmployees2 != null)
-            //name = selectedEmployees2[0].name;
-        //selectedEmployees2 = counter.selectedEmployees;
-        //name = (string)counter.getRowValue();
-        //selectedEmployees = counter.getRowValue();
-        var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri); //you can use IURIHelper for older versions
-
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("name", out var name))
-        {
-            var token_par = name.First();
-        }
-
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("email", out var email))
-        {
-            var userid_par = email.First();
-        }
+        //roleList = getDataClass.getRoleList();
     }
-    /*public override async Task SetParametersAsync(ParameterView parameters)
+    public void addEmployee()
     {
-        foreach (var param in parameters)
+        using (var db = new ConnectContext())
         {
-            var test = param.Value;
-            if (param.Name == nameof(name) && (string)param.Value != name)
+            var role = db.roles.Where(x => x.roleName == roleidEmployee).ToList();
+            Employee employee = new Employee
+                {
+                    id = Guid.NewGuid(),
+                    name = nameEmployee,
+                    email = emailEmployee,
+                    telefon = telefonEmployee,
+                    deactivation = deactivationEmployee,
+                    role = role[0]
+                };
+            if (employee != null)
             {
-                //await SomeAsyncMethod();
+                db.employees.Add(employee);
+                db.SaveChanges();
             }
         }
-        //await base.SetParametersAsync(parameters);
-    }*/
+    }
+    public string message{ get; set; }
     [Parameter]
-    public Guid id { get; set; }
+    public string idEmployee { get; set; }
     [Parameter]
-    public string? name { get; set; }
+    public string? nameEmployee { get; set; }
     [Parameter]
-    public string? email { get; set; }
+    public string? emailEmployee { get; set; } = "";
     [Parameter]
-    public string? telefon { get; set; }
+    public string? telefonEmployee { get; set; } = "";
     [Parameter]
-    public string? deactivation { get; set; }
+    public bool? deactivationEmployee { get; set; } = false;
     [Parameter]
-    public string? roleid { get; set; }
-    [Parameter]
-    public ParameterView data { get; set; }
-
-    public IList<CounterEmployee>? selectedEmployees2 { get; set; }
-
+    public string? roleidEmployee { get; set; } = "";
 }

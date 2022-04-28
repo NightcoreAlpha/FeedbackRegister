@@ -1,63 +1,91 @@
 ﻿@page "/TaskList"
-
 @using static FeedbackRegister.Data.ConnectClass
+@using static FeedbackRegister.Data.DataGridService
+@inject DataGridService dataGridService
+@using FeedbackRegister.Data
+@using Microsoft.EntityFrameworkCore
 
-
-
-<PageTitle>TaskList</PageTitle>
-
-<h3>TaskList</h3>
-
-<span>123</span>
-<br/>
-
-<input type="text" style="width:250px" @bind="perem" id="t1" name="t2"/>
+<h3>Список задач</h3>
 <br />
-<span>Результат: @perem</span>
-<br/>
-<p><label>Имя: </label>
-</p>
-<br/>
-<button class="btn btn-primary" @onclick="setfield">Кнопка для тестов</button>
-<br /><br />
-
-<input type="text" value="@field"/>
+<div class="nav-item pt-1 pb-3">
+            <NavLink>
+                    <button class='btn btn-primary' >Добавить комментарий</button>
+            </NavLink>
+            <NavLink href="Counter">
+                    <button class='btn btn-primary' >Удалить</button>
+            </NavLink>
+        </div>
+        <br />
+<RadzenDataGrid  AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="column_height_class" AllowColumnResize="true"
+    AllowSorting="true" TItem="Comment" Data="commentsList" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="150px" @bind-Value=@selectedComments style="margin:-25px;">
+        <Columns>
+            <RadzenDataGridColumn  TItem="Comment" Property="author.name" Title="Автор" Width="250px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="author_email" Title="Почта" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="section.name" Title="Раздел" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="comment" Title="Комментарий" Width="350px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="status.name" Title="Статус" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="iteration" Title="Итерация" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="priority.name" Title="Приоритет" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="jira_task" Title="JIRA" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="owner_gki.name" Title="Ответственный ГКИ" Width="250px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="email_owner_gki" Title="Почта ответственного ГКИ" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="data_comment_gki" Title="Дата комментария ГКИ" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="comment_gki" Title="Комментарий ГКИ" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="confirmation_sl" Title="Подтверждение СЛ" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="comment_sl" Title="Комментарий СЛ" Width="300px"></RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+    @*
+        public Guid id { get; set; }
+            public string? name { get; set; }
+            public DateTime? date { get; set; }
+            public DateTime? date_modified { get; set; }
+            public string? comment { get; set; }
+            public Guid? author { get; set; }
+            public Guid? owner_gki { get; set; }
+            public string? email_owner_gki { get; set; }
+            public Guid? status { get; set; }
+            public string? author_email { get; set; }
+            public string? section { get; set; }
+            public int? iteration { get; set; }
+            public string? priority { get; set; }
+            public string? jira_task { get; set; }
+            public DateTime? data_comment_gki { get; set; }
+            public string? confirmation_sl { get; set; }
+            public string? comment_sl { get; set; }
+    *@
 
 @code {
     public string perem { get; set; }
     public string field { get; set; }
+    List<Comment> commentsList = new List<Comment>();
+    public IList<Comment> selectedComments;
+
     protected override void OnInitialized()
     {
-        setPerem();
         base.OnInitialized();
+        setPerem();
     }
     private void setPerem()
     {
-
-        using(var db = new ConnectContext())
-        {
-            /*var testperem = db.test_product.ToList();
-            foreach (var c in testperem)
-                {
-                perem = c.name;
+        /*using (var db = new ConnectContext())
+            {
+                commentsList = db.comments?.Include(x=>x.author).Include(x=>x.section).Include(x=>x.priority).Include(x=>x.owner_gki).ToList();
+                selectedComments = commentsList.Take(1).ToList();
             }*/
-        }
-    }
-    void tata()
-    {
-        Console.WriteLine("My debug output.");
-        //Console.WriteLine("FN");
-        //perem = "ATATATA";
+      commentsList = dataGridService.getComments();
+      selectedComments = commentsList.Take(1).ToList();
+
     }
     void setfield()
     {
         field = perem;
-        using(var db = new ConnectContext())
+        using (var db = new ConnectContext())
         {
             var employee = db.employees?.ToList();
-            foreach(Employee e in employee)
+            foreach (Employee e in employee)
             {
-                
+
             }
 
             /*var testperem = db.test_product.ToList();
