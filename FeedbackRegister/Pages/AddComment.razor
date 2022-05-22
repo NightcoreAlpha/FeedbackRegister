@@ -1,0 +1,216 @@
+﻿@page "/AddComment"
+@using Microsoft.EntityFrameworkCore
+@using static FeedbackRegister.Data.ConnectClass
+@using static FeedbackRegister.Data.DataGridService
+@inject FeedbackRegister.Data.GetDataClass getDataClass
+
+<h3>Новый комментарий</h3>
+    <div class="nav-item pt-1 pb-3">
+            <NavLink class="" href="TaskList">
+                    <button class='btn btn-success' onclick=@addComment>Сохранить</button>
+            </NavLink>
+            <NavLink class="" href="TaskList">
+                    <button class='btn btn-secondary'>Отмена</button>
+            </NavLink>
+</div>
+<p>
+    <div class="myDivClass">
+        <label>Автор: &nbsp;</label>
+        <RadzenDropDown Placeholder="Выберите автора" TValue=Customer Data=@customerList TextProperty="name" Change=@authorClick/>
+    </div>
+        </p>
+
+    <p>
+    <label>Email автора:&nbsp;</label>
+    <input type="text" style="width:250px" readonly=true @bind=@author_email/>
+    </p>
+
+        <p>
+    <div class="myDivClass">
+    <label>Секция:&nbsp;</label>
+    <RadzenDropDown Placeholder="Выберите секцию" TValue=Section Data=@sectionList TextProperty="name" Change=@sectionsClick/>
+    </div>
+        </p>
+
+    <p>
+    <div class="myDivClass">
+    <label>Комментарий:&nbsp;</label>
+    <textarea style="width:250px; height: 100px;" @bind=@comment/>
+    </div>
+    </p>
+
+        <p>
+    <div class="myDivClass">
+    <label>Секция:&nbsp;</label>
+    <RadzenDropDown Placeholder="Выберите статус" TValue=Status Data=@statusList TextProperty="name" Change=@statusClick/>
+    </div>
+        </p>
+
+        <p>
+    <div class="myDivClass">
+    <label>Приоритет:&nbsp;</label>
+    <RadzenDropDown Placeholder="Выберите приоритет" TValue=Priority Data=@priorityList TextProperty="name" Change=@priorityClick/>
+    </div>
+        </p>
+
+        <p>
+    <div class="myDivClass">
+    <label>Jira(номера тасок):&nbsp;</label>
+    <textarea style="width:250px; height: 50px;" @bind=@jira/>
+    </div>
+    </p>
+
+        <p>
+    <div class="myDivClass">
+    <label>Ответственный ГКИ:&nbsp;</label>
+    <RadzenDropDown Placeholder="Выберите ответственного" TValue=Employee Data=@owner_gkiList TextProperty="name" Change=@owner_gkiClick/>
+    </div>
+        </p>
+
+            <p>
+    <div class="myDivClass">
+    <label>Email ответственного:&nbsp;</label>
+    <input type="text" readonly=true style="width:250px" @bind=@owner_email/>
+    </div>
+    </p>
+
+    <p>
+    <div class="myDivClass">
+    <label>Комментарий ГКИ:&nbsp;</label>
+    <textarea style="width:250px; height: 100px;" @bind=@comment_gki/>
+    </div>
+    </p>
+
+            <p>
+    <div class="myDivClass">
+    <label>Подтверждение СЛ:&nbsp;</label>
+    <input type="text" style="width:250px" @bind=@confirmation_sl/>
+    </div>
+    </p>
+
+    <p>
+    <div class="myDivClass">
+    <label>Комментарий СЛ:&nbsp;</label>
+    <textarea style="width:250px; height: 100px;" @bind=@comment_sl/>
+    </div>
+    </p>
+
+    @*<p>
+    <label>Телефон: </label>
+    <input type="text" name="telefonbox" @bind=@telefonEmployee/>
+    </p>*@
+
+    @*
+            <RadzenDataGridColumn  TItem="Comment" Property="author.name" Title="Автор" Width="250px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="author_email" Title="Почта" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="section.name" Title="Раздел" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="comment" Title="Комментарий" Width="350px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="status.name" Title="Статус" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="iteration" Title="Итерация" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="priority.name" Title="Приоритет" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="jira_task" Title="JIRA" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="owner_gki.name" Title="Ответственный ГКИ" Width="250px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="email_owner_gki" Title="Почта ответственного ГКИ" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="data_comment_gki" Title="Дата комментария ГКИ" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="comment_gki" Title="Комментарий ГКИ" Width="200px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="confirmation_sl" Title="Подтверждение СЛ" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="comment_sl" Title="Комментарий СЛ" Width="300px"></RadzenDataGridColumn>
+    *@
+@code {
+    public List<Customer>? customerList = new List<Customer>();
+    public Customer? customerId = new Customer();
+    public string? author_email;
+    public List<Section>? sectionList = new List<Section>();
+    public Section? sectionId;
+    public string? comment = "";
+    public List<Status>? statusList = new List<Status>();
+    public Status? statusId;
+    public int? iteration;
+    public List<Priority>? priorityList = new List<Priority>();
+    public Priority? priorityId;
+    public string? jira = "";
+    public List<Employee>? owner_gkiList = new List<Employee>();
+    public Employee? owner_gkiId;
+    public string? owner_email = "";
+    public string? data_comment_gki = "";
+    public string? comment_gki = "";
+    public string? confirmation_sl = "";
+    public string? comment_sl = "";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        iteration = 1;
+        customerList = getDataClass.getCustomerList();
+        sectionList = getDataClass.getSectionsList();
+        statusList = getDataClass.getStatusList();
+        priorityList = getDataClass.getPriorityList();
+        owner_gkiList = getDataClass.getOwner_gkiList();
+        //data_comment_gki = ?
+        //roleList = getDataClass.getRoleList();
+    }
+    public void authorClick(object value)
+    {
+        var customer = (Customer)value;
+        author_email = customer.email;
+        customerId = customer;
+    }
+    public void sectionsClick(object value)
+    {
+        var section = (Section)value;
+        sectionId = section;
+    }
+    public void statusClick(object value)
+    {
+        var status = (Status)value;
+        statusId = status;
+    }
+    public void priorityClick(object value)
+    {
+        var priority = (Priority)value;
+        priorityId = priority;
+    }
+    public void owner_gkiClick(object value)
+    {
+        var owner_gki = (Employee)value;
+        owner_email = owner_gki.email;
+        owner_gkiId = owner_gki;
+    }
+    public void addComment()
+    {
+        using (var db = new ConnectContext())
+        {
+            //var customer = db.customers.Include(x=>x.company).Where(x=>x.id == customerId.id).ToList();
+            //var test = customer[0];
+            //var test2 = customerList.Where(x=>x.id == customerId.id).ToList();
+            //var test3 = customerId;
+            db.customers.Attach(customerId);
+            db.sections.Attach(sectionId);
+            db.status.Attach(statusId);
+            db.priority.Attach(priorityId);
+            db.employees.Attach(owner_gkiId);
+            
+
+            Comment comment = new Comment
+                {
+                    id = Guid.NewGuid(),
+                    author = customerId,
+                    author_email = author_email,
+                    section = sectionId,
+                    comment = this.comment,
+                    status = statusId,
+                    iteration = this.iteration,
+                    priority = priorityId,
+                    jira_task = jira,
+                    owner_gki = owner_gkiId,
+                    email_owner_gki = owner_email,
+                    data_comment_gki = DateTime.Now.ToShortDateString(),
+                    comment_gki = this.comment_gki,
+                    confirmation_sl = this.confirmation_sl,
+                    comment_sl = this.comment_sl
+                };
+            db.comments.Add(comment);
+            db.SaveChanges();
+        }
+    }
+}

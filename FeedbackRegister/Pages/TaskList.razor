@@ -4,17 +4,19 @@
 @inject DataGridService dataGridService
 @using FeedbackRegister.Data
 @using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
+
 
 <h3>Список задач</h3>
-<br />
 <div class="nav-item pt-1 pb-3">
             <NavLink>
-                    <button class='btn btn-primary' >Добавить комментарий</button>
+                    <button class='btn btn-primary' onclick="@addComment">Добавить комментарий</button>
             </NavLink>
-            <NavLink href="Counter">
-                    <button class='btn btn-primary' >Удалить</button>
+            <NavLink>
+                    <button class='btn btn-primary' onclick=@deleteComment>Удалить</button>
             </NavLink>
         </div>
+        <br />
         <br />
 <RadzenDataGrid  AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="column_height_class" AllowColumnResize="true"
     AllowSorting="true" TItem="Comment" Data="commentsList" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="150px" @bind-Value=@selectedComments style="margin:-25px;">
@@ -28,10 +30,10 @@
             <RadzenDataGridColumn  TItem="Comment" Property="priority.name" Title="Приоритет" Width="150px"></RadzenDataGridColumn>
             <RadzenDataGridColumn  TItem="Comment" Property="jira_task" Title="JIRA" Width="150px"></RadzenDataGridColumn>
             <RadzenDataGridColumn  TItem="Comment" Property="owner_gki.name" Title="Ответственный ГКИ" Width="250px"></RadzenDataGridColumn>
-            <RadzenDataGridColumn  TItem="Comment" Property="email_owner_gki" Title="Почта ответственного ГКИ" Width="200px"></RadzenDataGridColumn>
-            <RadzenDataGridColumn  TItem="Comment" Property="data_comment_gki" Title="Дата комментария ГКИ" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="email_owner_gki" Title="Почта ответственного ГКИ" Width="210px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="data_comment_gki" Title="Дата комментария ГКИ" Width="190px"></RadzenDataGridColumn>
             <RadzenDataGridColumn  TItem="Comment" Property="comment_gki" Title="Комментарий ГКИ" Width="200px"></RadzenDataGridColumn>
-            <RadzenDataGridColumn  TItem="Comment" Property="confirmation_sl" Title="Подтверждение СЛ" Width="150px"></RadzenDataGridColumn>
+            <RadzenDataGridColumn  TItem="Comment" Property="confirmation_sl" Title="Подтверждение СЛ" Width="170px"></RadzenDataGridColumn>
             <RadzenDataGridColumn  TItem="Comment" Property="comment_sl" Title="Комментарий СЛ" Width="300px"></RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
@@ -68,14 +70,12 @@
     }
     private void setPerem()
     {
-        /*using (var db = new ConnectContext())
-            {
-                commentsList = db.comments?.Include(x=>x.author).Include(x=>x.section).Include(x=>x.priority).Include(x=>x.owner_gki).ToList();
-                selectedComments = commentsList.Take(1).ToList();
-            }*/
-      commentsList = dataGridService.getComments();
-      selectedComments = commentsList.Take(1).ToList();
-
+        commentsList = dataGridService.getComments();
+        selectedComments = commentsList.Take(1).ToList();
+    }
+    void addComment()
+    {
+        NavigationManager.NavigateTo("AddComment");
     }
     void setfield()
     {
@@ -94,5 +94,18 @@
                 perem = c.name;
             }*/
         }
+    }
+    public void deleteComment()
+    {
+        using (var db = new ConnectContext())
+        {
+            var comment = db.comments.Where(x => x.id == selectedComments[0].id).ToList();
+            if (comment.Count > 0)
+            {
+                db.comments.Remove(comment[0]);
+                db.SaveChanges();
+            }
+        }
+        commentsList = dataGridService.getComments();
     }
     }

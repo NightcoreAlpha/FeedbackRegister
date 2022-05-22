@@ -14,7 +14,7 @@ builder.Services.AddScoped<Counter>();
 builder.Services.AddScoped<AddEmployee>();
 builder.Services.AddScoped<UpdateEmployee>();
 builder.Services.AddScoped<GetDataClass>();
-//builder.Services.AddScoped<>();
+builder.Services.AddScoped<AddComment>();
 
 var app = builder.Build();
 

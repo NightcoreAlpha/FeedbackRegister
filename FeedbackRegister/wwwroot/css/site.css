@@ -67,3 +67,7 @@ a, .btn-link {
     line-height: 75px;
     /*table td:first-child*/
 }
+.myDivClass {
+    display:flex;
+    align-items:center !important;
+}

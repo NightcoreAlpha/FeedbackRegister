@@ -62,6 +62,7 @@
         using (var db = new ConnectContext())
         {
             var role = db.roles.Where(x => x.roleName == roleidEmployee).ToList();
+            var rol = role[0];
             Employee employee = new Employee
                 {
                     id = Guid.NewGuid(),

@@ -87,7 +87,7 @@ namespace FeedbackRegister.Data
         {
             public Guid id { get; set; }
             public string? name { get; set; }
-            public DateTime? data { get; set; }
+            public string? data { get; set; }
             public DateTime? data_modified { get; set; }
             public string? comment { get; set; }
             public virtual Customer? author { get; set; }
@@ -99,7 +99,7 @@ namespace FeedbackRegister.Data
             public int? iteration { get; set; }
             public virtual Priority? priority { get; set; }
             public string? jira_task { get; set; }
-            public DateTime? data_comment_gki { get; set; }
+            public string? data_comment_gki { get; set; }
             public string? comment_gki { get; set; }
             public string? confirmation_sl { get; set; }
             public string? comment_sl { get; set; }
