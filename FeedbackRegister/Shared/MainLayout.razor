@@ -1,21 +1,24 @@
-﻿
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
 <PageTitle>FeedbackRegister</PageTitle>
 
 <div class="page">
     <div>
-        <HeaderComponent/>
+        <HeaderComponent />
     </div>
+    @if (Body != null)
+    {
+            <article class="content px-4">
+                @Body
+            </article>
+    }
+    else
+    {
+        <main class="mainLayoutClass">
+            <div class="sidebar">
+                
+            </div>
 
-    <main class="mainLayoutClass">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-      @*  <div class="paddingPage">
-        <article class="content px-4">
-            @Body
-        </article>
-        </div>*@
-    </main>
+        </main>
+    }
 </div>
