@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static FeedbackRegister.Data.ConnectClass;
-//using static FeedbackRegister.Data.ConnectClass;
-namespace FeedbackRegister.Data
+using static Handicraft.Data.ConnectClass;
+//using static Handicraft.Data.ConnectClass;
+namespace Handicraft.Data
 {
     public class GetDataClass
     {

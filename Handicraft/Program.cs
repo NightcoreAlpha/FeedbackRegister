@@ -1,5 +1,5 @@
-using FeedbackRegister.Data;
-using FeedbackRegister.Pages;
+using Handicraft.Data;
+using Handicraft.Pages;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 

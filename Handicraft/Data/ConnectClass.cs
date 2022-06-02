@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
 
-namespace FeedbackRegister.Data
+namespace Handicraft.Data
 
 {
     public class ConnectClass

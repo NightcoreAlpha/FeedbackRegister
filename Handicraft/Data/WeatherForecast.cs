@@ -1,4 +1,4 @@
-namespace FeedbackRegister.Data
+namespace Handicraft.Data
 {
     public class WeatherForecast
     {
