@@ -1,5 +1,5 @@
 ﻿@page "/TaskList"
-@using static Handicraft.Data.ConnectClass
+@using static Handicraft.Data.ConnectDB
 @using static Handicraft.Data.DataGridService
 @inject DataGridService dataGridService
 @using Handicraft.Data
@@ -18,7 +18,7 @@
         </div>
         <br />
         <br />
-<RadzenDataGrid  AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="column_height_class" AllowColumnResize="true"
+@*<RadzenDataGrid  AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="column_height_class" AllowColumnResize="true"
     AllowSorting="true" TItem="Comment" Data="commentsList" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="150px" @bind-Value=@selectedComments style="margin:-25px;">
         <Columns>
             <RadzenDataGridColumn  TItem="Comment" Property="author.name" Title="Автор" Width="250px"></RadzenDataGridColumn>
@@ -37,7 +37,7 @@
             <RadzenDataGridColumn  TItem="Comment" Property="comment_sl" Title="Комментарий СЛ" Width="300px"></RadzenDataGridColumn>
         </Columns>
     </RadzenDataGrid>
-    @*
+    
         public Guid id { get; set; }
             public string? name { get; set; }
             public DateTime? date { get; set; }
@@ -60,8 +60,8 @@
 @code {
     public string perem { get; set; }
     public string field { get; set; }
-    List<Comment> commentsList = new List<Comment>();
-    public IList<Comment> selectedComments;
+    //List<Comment> commentsList = new List<Comment>();
+    //public IList<Comment> selectedComments;
 
     protected override void OnInitialized()
     {
@@ -70,8 +70,8 @@
     }
     private void setPerem()
     {
-        commentsList = dataGridService.getComments();
-        selectedComments = commentsList.Take(1).ToList();
+        /*commentsList = dataGridService.getComments();
+        selectedComments = commentsList.Take(1).ToList();*/
     }
     void addComment()
     {
@@ -79,7 +79,7 @@
     }
     void setfield()
     {
-        field = perem;
+        /*field = perem;
         using (var db = new ConnectContext())
         {
             var employee = db.employees?.ToList();
@@ -92,12 +92,12 @@
             foreach (var c in testperem)
                 {
                 perem = c.name;
-            }*/
-        }
+            }
+        }*/
     }
     public void deleteComment()
     {
-        using (var db = new ConnectContext())
+        /*using (var db = new ConnectContext())
         {
             var comment = db.comments.Where(x => x.id == selectedComments[0].id).ToList();
             if (comment.Count > 0)
@@ -106,6 +106,6 @@
                 db.SaveChanges();
             }
         }
-        commentsList = dataGridService.getComments();
+        commentsList = dataGridService.getComments();*/
     }
     }

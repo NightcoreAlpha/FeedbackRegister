@@ -1,10 +1,10 @@
 ﻿@page "/AddComment"
 @using Microsoft.EntityFrameworkCore
-@using static Handicraft.Data.ConnectClass
+@using static Handicraft.Data.ConnectDB
 @using static Handicraft.Data.DataGridService
 @inject Handicraft.Data.GetDataClass getDataClass
 
-<h3>Новый комментарий</h3>
+@*<h3>Новый комментарий</h3>
     <div class="nav-item pt-1 pb-3">
             <NavLink class="" href="TaskList">
                     <button class='btn btn-success' onclick=@addComment>Сохранить</button>
@@ -117,7 +117,7 @@
             <RadzenDataGridColumn  TItem="Comment" Property="comment_sl" Title="Комментарий СЛ" Width="300px"></RadzenDataGridColumn>
     *@
 @code {
-    public List<Customer>? customerList = new List<Customer>();
+    /*public List<Customer>? customerList = new List<Customer>();
     public Customer? customerId = new Customer();
     public string? author_email;
     public List<Section>? sectionList = new List<Section>();
@@ -135,17 +135,17 @@
     public string? data_comment_gki = "";
     public string? comment_gki = "";
     public string? confirmation_sl = "";
-    public string? comment_sl = "";
+    public string? comment_sl = "";-*
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         iteration = 1;
-        customerList = getDataClass.getCustomerList();
+        /*customerList = getDataClass.getCustomerList();
         sectionList = getDataClass.getSectionsList();
         statusList = getDataClass.getStatusList();
         priorityList = getDataClass.getPriorityList();
-        owner_gkiList = getDataClass.getOwner_gkiList();
+        owner_gkiList = getDataClass.getOwner_gkiList();-*
         //data_comment_gki = ?
         //roleList = getDataClass.getRoleList();
     }
@@ -211,6 +211,6 @@
                 };
             db.comments.Add(comment);
             db.SaveChanges();
-        }
+        }*/
     }
 }

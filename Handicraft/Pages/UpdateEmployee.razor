@@ -3,22 +3,22 @@
 @using static Handicraft.Data.DataGridService
 @using static Handicraft.Data.GetDataClass
 @using static Handicraft.Pages.Counter
-@using static Handicraft.Data.ConnectClass
+@using static Handicraft.Data.ConnectDB
 @inject Counter counter
 @inject GetDataClass getDataClass
 @inject NavigationManager NavigationManager
 
 <div class="nav-item pt-1 pb-3">
-            <NavLink class="" href="Counter">
+            @*<NavLink class="" href="Counter">
                     <button class='btn btn-success' onclick=@editEmployee>Сохранить</button>
             </NavLink>
             <NavLink class="" href="Counter">
                     <button class='btn btn-secondary' onclick=@goBack>Отмена</button>
-            </NavLink>
+            </NavLink>*@
 </div>
-<h3>@nameEmployee</h3>
+@*<h3>@nameEmployee</h3>*@
 <br />
-@if (selectedEmployees != null)
+@*@if (selectedEmployees != null)
 {
     <p>
         <label>Имя: </label>
@@ -33,7 +33,7 @@
             <label>Телефон: </label>
             <input type="text" name="telefonbox" @bind=@telefonEmployee/>
         </p>
-        @if (roleList.Count > 0)
+        @*if (roleList.Count > 0)
         {
             <label>Должность: </label>
             <select name="professionbox" @bind=@roleidEmployee>
@@ -52,12 +52,12 @@
                     {
                         InputAttributes = new Dictionary<string, object>();
                     }*/
-                    <option @attributes=@InputAttributes>@c.roleName</option>
+                    @*<option @attributes=@InputAttributes>@c.roleName</option>
                 }
 
             </select>
         }
-    </p>
+    </p>*@
     <p>
         <label>Деактивирована: </label>
         <input type="checkbox" name="deactbox" @bind=@deactivationEmployee/>
@@ -68,47 +68,47 @@ else
     <span style="color:red; font-size: 40px">Error: Нет данных</span>
 }
 @code {
-    string? name { get; set; }
+    /*string? name { get; set; }
     List<Role>? roleList = new List<Role>();
     IList<Employee> selectedEmployees = new List<Employee>();
     public Dictionary<string, object> InputAttributes { get; set; } =
         new Dictionary<string, object>()
         {
             {"selected", "selected" }
-        };  
+        };  */
     protected override void OnInitialized()
     {
         base.OnInitialized();
         if (id != null)
         {
-            roleList = getDataClass.getRoleList();
-            selectedEmployees = getDataClass.getEmployee(new Guid(id));
+            //roleList = getDataClass.getRoleList();
+            //selectedEmployees = getDataClass.getEmployee(new Guid(id));
         }
 
-        nameEmployee = selectedEmployees[0].name;
+        /*nameEmployee = selectedEmployees[0].name;
         emailEmployee = selectedEmployees[0].email;
         telefonEmployee = selectedEmployees[0].telefon;
         //roleidEmployee = selectedEmployees[0].roleid;
-        deactivationEmployee = selectedEmployees[0].deactivation;
+        deactivationEmployee = selectedEmployees[0].deactivation;*/
         //selectedEmployees = employee.Take(1).ToList();
 
     }
     void editEmployee()
     {
-        using(var db = new ConnectContext())
+        using(var db = new ConnectContext("",""))
         {
-            List<Role>? idRole = roleList.Where(x => x?.roleName == roleidEmployee).ToList();
+            /*List<Role>? idRole = roleList.Where(x => x?.roleName == roleidEmployee).ToList();
             var employee = db?.employees?.Where(x => x.id == new Guid(id)).ToList();
             employee[0].name = nameEmployee;
             employee[0].email = emailEmployee;
             employee[0].telefon = telefonEmployee;
             employee[0].deactivation = deactivationEmployee;
             employee[0].role = idRole[0];
-            if (/*roleidEmployee != "" && roleId != Guid.Empty*/ idRole.Count > 0)
+            if (/*roleidEmployee != "" && roleId != Guid.Empty idRole.Count > 0)
             {
                 //employee[0].roleid = idRole[0].id;
             }
-            db.SaveChanges();
+            db.SaveChanges();*/
         }
         NavigationManager.NavigateTo("Counter");
     }

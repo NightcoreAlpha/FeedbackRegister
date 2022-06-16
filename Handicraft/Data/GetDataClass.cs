@@ -3,20 +3,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Handicraft.Data.ConnectClass;
+using static Handicraft.Data.ConnectDB;
 //using static Handicraft.Data.ConnectClass;
 namespace Handicraft.Data
 {
     public class GetDataClass
     {
-        public List<Employee>? employee = new List<Employee>();
+        /*public List<Employee>? employee = new List<Employee>();
         public List<Role>? role = new List<Role>();
         public List<Customer>? customers = new List<Customer>();
         public List<Section>? sectionList = new List<Section>();
         public List<Status>? statusList = new List<Status>();
         public List<Priority>? priorityList = new List<Priority>();
-        public List<Employee>? owner_gkiList = new List<Employee>();
-        public List<Employee> getEmployee(Guid id)
+        public List<Employee>? owner_gkiList = new List<Employee>();*/
+        /*public List<Employee> getEmployee(Guid id)
         {
             using(var db = new ConnectContext())
             {
@@ -71,6 +71,6 @@ namespace Handicraft.Data
                 owner_gkiList = db.employees.ToList();
             }
             return owner_gkiList;
-        }
+        }*/
     }
 }

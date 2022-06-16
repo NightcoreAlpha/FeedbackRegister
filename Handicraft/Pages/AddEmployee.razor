@@ -3,19 +3,19 @@
 @using static Handicraft.Data.DataGridService
 @using static Handicraft.Pages.Counter
 @inject Counter counter;
-@using static Handicraft.Data.ConnectClass;
+@using static Handicraft.Data.ConnectDB;
 @inject Handicraft.Data.GetDataClass getDataClass
 
 <h2>@person</h2>
 <div class="nav-item pt-1 pb-3">
             <NavLink class="" href="Counter">
-                    <button class='btn btn-success' onclick=@addEmployee>Сохранить</button>
+                   @* <button class='btn btn-success' onclick=@addEmployee>Сохранить</button>*@
             </NavLink>
             <NavLink class="" href="Counter">
                     <button class='btn btn-secondary'>Отмена</button>
             </NavLink>
 </div>
-    <p>
+@*    <p>
   <label>Имя: </label>
     <input type="text" name="namebox" @bind=@nameEmployee/>
     </p>
@@ -28,7 +28,7 @@
     <label>Телефон: </label>
     <input type="text" name="telefonbox" @bind=@telefonEmployee/>
     </p>
-    @if (roleList.Count > 0)
+    if (roleList.Count > 0)
     {
         <label>Должность: </label>
         <select name="professionbox" @bind=@roleidEmployee>
@@ -38,20 +38,19 @@
                 <option>@c.roleName</option>
             }
         </select>
-    }
+    //}
     </p>
     <p>
     <label>Деактивирована: </label>
     <input type="checkbox" name="deactbox" @bind=@deactivationEmployee/>
-    </p>
-    <span>@message</span>
+    </p>*@
 @code {
     //string? email { get; set; }
     //string? role { get; set; }
     //string? telefon { get; set; }
     //string? selectedEmployees;
     string person = "Новая запись";
-    List<Role> roleList = new List<Role>();
+    //List<Role> roleList = new List<Role>();
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -59,7 +58,7 @@
     }
     public void addEmployee()
     {
-        using (var db = new ConnectContext())
+        /*using (var db = new ConnectContext())
         {
             var role = db.roles.Where(x => x.roleName == roleidEmployee).ToList();
             var rol = role[0];
@@ -77,19 +76,6 @@
                 db.employees.Add(employee);
                 db.SaveChanges();
             }
-        }
+        }*/
     }
-    public string message{ get; set; }
-    [Parameter]
-    public string idEmployee { get; set; }
-    [Parameter]
-    public string? nameEmployee { get; set; }
-    [Parameter]
-    public string? emailEmployee { get; set; } = "";
-    [Parameter]
-    public string? telefonEmployee { get; set; } = "";
-    [Parameter]
-    public bool? deactivationEmployee { get; set; } = false;
-    [Parameter]
-    public string? roleidEmployee { get; set; } = "";
-}
+    }

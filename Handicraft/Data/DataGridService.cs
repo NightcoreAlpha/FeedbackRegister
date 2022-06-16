@@ -3,14 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Handicraft.Data.ConnectClass;
+using static Handicraft.Data.ConnectDB;
 namespace Handicraft.Data
 {
     public class DataGridService
     {
-        List<CounterEmployee> employee = new List<CounterEmployee>();
+        //List<CounterEmployee> employee = new List<CounterEmployee>();
         //List<Comment> commentsList = new List<Comment>();
-        List<Employee> getEmployees()
+        /*List<Employee> getEmployees()
         {
             //employee.Clear();
             List <Employee> employee = new List<Employee>();
@@ -29,7 +29,7 @@ namespace Handicraft.Data
                 commentsList = db.comments.Include(x=>x.author).Include(x=>x.section).Include(x=>x.priority).Include(x=>x.owner_gki).Include(x=>x.status).ToList();
             }
             return commentsList;
-        }
+        }*/
         //List<Employee>? employees { get; set; }
 
         /*List<Employee> getEmployees()
@@ -58,15 +58,15 @@ namespace Handicraft.Data
             getEmployees();
             return await Task.FromResult(employee);
         }*/
-        public List<Employee> EmployeeList()
+        /*public List<Employee> EmployeeList()
         {
             return getEmployees();
         }
         public List<Comment> CommentList()
         {
             return getComments();
-        }
-        public class CounterEmployee
+        }*/
+        /*public class CounterEmployee
         {
             public Guid id { get; set; }
             public string? name { get; set; }
@@ -74,6 +74,6 @@ namespace Handicraft.Data
             public string? telefon { get; set; }
             public bool? deactivation { get; set; }
             public string? roleName { get; set; }
-        }
+        }*/
     }
 }

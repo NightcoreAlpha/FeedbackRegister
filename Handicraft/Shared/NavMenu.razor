@@ -1,11 +1,13 @@
 ﻿@page "/NavMenu"
+@using static Handicraft.Data.ConnectDB;
+
 <link rel="stylesheet" href="css/Components.css" />
 
 <body>
-    <div class="container" style="opacity:0.8">
+    <div class="container" style="opacity:0.8">  
         <div class="homepage-top-grid">
-            <div class="homepage-top-grid__menu" id="homepage-desktop-menu-wrap">
-                <span id="as-95e44db56483462e15fbf8cfaf123688" class="menu-desktop menu-desktop_ph" data-type="0">
+            <div class="homepage-top-grid__menu" id="homepage-desktop-menu-wrap">       
+
                         <nav class="menu-desktop__root-info">
                             <img src="images/clothes.svg" style="width:32px;height:32px;margin:25px"/>
                             <a class="ui-link menu-desktop__root-title" href="/">Одежда</a>
@@ -30,7 +32,6 @@
                             <img src="images/credit_cards.svg" style="width:32px;height:32px;margin:25px"/>
                             <a class="ui-link menu-desktop__root-title" href="/">Визитницы</a>
                         </nav>
-                </span>
             </div>
             <div class="homepage-top-grid__center" style="width:1100px !important">
                 <span class="homepage-slider-wrap">
