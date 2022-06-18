@@ -1,4 +1,4 @@
- .navbar-toggler {
+.navbar-toggler {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -32,7 +32,7 @@
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;/*цвет текста и иконок*/
+        color: #d7d7d7;
         border-radius: 4px;
         height: 3rem;
         display: flex;
@@ -40,15 +40,15 @@
         line-height: 3rem;
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
+        .nav-item ::deep a.active {
+            background-color: rgba(255,255,255,0.25);
+            color: white;
+        }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: gray;/*цвет выделенной ссылки*/
-}
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
 
 @media (min-width: 641px) {
     .navbar-toggler {
@@ -60,3 +60,50 @@
         display: block;
     }
 }
+
+.product-field {
+    background-color: rgb(255 255 255);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 16%);
+}
+
+.central-container {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1180px;
+    width: 100%;
+    display: flex;
+    padding: 0px;
+    /*background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);*/
+    opacity: 1;
+}
+
+.select {
+    width: 250px;
+    border-radius: 8px;
+    padding: 20px 0px 20px 45px;
+    color: black;
+
+    background-color: white;
+}
+
+    .select:focus, .select:hover {
+        color: ActiveCaption;
+        outline: 0;
+        text-decoration: none
+    }
+
+.color-selector {
+    background: linear-gradient(to top, rgba(32,33,79,0.5), rgba(102,141,181,0.5));
+    font-size: 18px;
+    background-color: white;
+}
+
+    .color-selector:hover {
+        color: rgba(32,33,79,0.5);
+    }
+
+    .color-selector:visited {
+        color: rgba(32,33,79,0.5);
+    }

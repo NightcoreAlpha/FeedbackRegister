@@ -1,0 +1,19 @@
+.product-field {
+    background-color: rgb(255 255 255);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 16%);
+    grid-gap: 12px 0;
+    display: grid;
+    grid-template-columns: auto minmax(0,1fr) 170px;
+    grid-template-rows: 1fr 32px 20px;
+    padding: 24px 16px;
+    margin: 0px 0px 0px 20px;
+}
+
+.central-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    grid-gap: 10px;
+    display: grid;
+}

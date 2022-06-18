@@ -1,70 +1,43 @@
-﻿<link href="/css/Components.css" rel="stylesheet" />
-
-<header>
-    <div class="header-top" style="background-color:rgb(102 141 181);line-height:32px;">
-        <div class="header-top-menu container">
-            <ul class="header-top-menu__common-list">
-                <li class="header-top-menu__common-item">
-                    <div class="header-top-menu__common-link header-top-menu__common-link_city">
-                        <img src="images/location.svg" style="width:15px;height:15px;" />
-                        <span class="city-select__text" style="line-height:32px;">Молдова</span>
-                    </div>
-                </li>
-                <li class="header-top-menu__common-item ">
-                    <a class="header-top-menu__common-link" href="/MyContacts">Контакты</a>
-                </li>
-                <li class="header-top-menu__common-item ">
-                    <a class="header-top-menu__common-link" href="/Requisites" rel="nofollow">Реквизиты</a>
-                </li>
-            </ul>
-            <img src="images/call.svg" style="width:20px;line-height:32px;" />
-
-            <span style="font-weight:700; font-size: 14px;">+373-784-46-676</span>
+﻿<div class="info-container">
+    <div class="info-line" style="">
+        <ul class="ul-item">
+            <li class="li-item">
+                <img src="images/location.svg" style="width:15px;height:28px;" />
+                Молдова
+            </li>
+            <li class="li-item">
+                Контакты
+            </li>
+            <li class="li-item">
+                Реквизиты
+            </li>
+            <li class="li-item">
+                <img src="images/call.svg" style="width:20px;line-height:32px;" />
+                +373-784-46-676
+            </li>
+        </ul>
+    </div>
+    <div class="panel-line" style="">
+        <div class="panel-item">
+            <img src="images/logoHC.svg" />
+            <div class="panel-search">
+                <input class="input-place icon-clear" type="search" placeholder="Поиск по сайту" autocomplete="on">
+                <img src="images/loupe.svg" class="search-icon" />
+            </div>
+            <div class="user-elements">
+                <a class="user-item" href="/">
+                    <img src="images/heart.svg" style="width:20px;height:20px">
+                    <span>Избранное</span>
+                </a>
+                <a class="user-item" href="/">
+                    <img src="images/cart.svg" style="width:24px;height:24px">
+                    <span>Корзина</span>
+                </a>
+            </div>
         </div>
     </div>
-    <nav id="header-search" class="header-bottom slide">
-        <div class="container">
-            <div class="header-menu-wrapper">
-                <div class="logo-container">
-                    <a id="header-logo" href="/">
-                        <img src="images/logoHC.svg" />
-                    </a>
-                    <span class="catalog-spoiler " data-menu-desktop-toggle>
-                    </span>
-                </div>
-                <form action="/search/" method="get" class="presearch" data-role="presearch-form">
-                    <div class="ui-input-search ui-input-search_presearch" bis_skin_checked="1">
-                        <input class="ui-input-search__input ui-input-search__input_presearch" name="q" value="" type="search" placeholder="Поиск по сайту" autocomplete="off">
-                        <div class="ui-input-search__buttons" bis_skin_checked="1">
-                            <span class="ui-input-search__icon ui-input-search__icon_presearch">
-                                <img src="images/loupe.svg" style="width:18px;height:18px;" />
-                            </span>
-                        </div>
-                    </div>
-                </form>
-                <div class="buttons">
-                    <a class="ui-link wishlist-link" href="/wishlist/index/">
-                        <img src="images/heart.svg" style="width:20px;height:20px" />
-                        <span class="wishlist-link__lbl">Избранное</span>
-                    </a>
-                    <a class="ui-link cart-link" href="/">
-                        <img src="images/cart.svg" style="width:24px;height:24px" />
-                        <span>Корзина</span>
-                    </a>
-                </div>
-                <div class="header__user-menu">
-                    <div id="user-menu">
-                    </div>
-                </div><!--/noindex--><!--googleon: all-->
-            </div>
-            <div class="menu-desktop-wrap" data-menu-desktop-wrap>
-                <div class="menu-desktop-wrap__sub">
-                    <span id="as-af99eb81f47b257b7fade9479577a1cb" class="menu-desktop menu-desktop_ph"></span>
-                </div>
-            </div>
-        </div>
-    </nav>
-</header>
+</div>
+
 @code {
 
 }

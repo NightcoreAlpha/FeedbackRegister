@@ -6,8 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
-using Yandex.Cloud;
-using Yandex.Cloud.Credentials;
 
 namespace Handicraft.Data
 
@@ -38,10 +36,6 @@ namespace Handicraft.Data
                     optionsbuilder.UseNpgsql("Server=localhost;Port=5432;Username=" + Login + ";Password=" + Password + ";Database=handicraft;");
                 }
                 catch (Exception exp) { string message = exp.Message; /*MessageBox.Show("Ошибка подключения: " + exp.Message, "Ошибка");*/ }
-            }
-            protected override void OnModelCreating(ModelBuilder modelBuilder)
-            {
-
             }
         }
         public class User

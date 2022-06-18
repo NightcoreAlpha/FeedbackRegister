@@ -2,23 +2,18 @@
 
 <PageTitle>Handicraft</PageTitle>
 
-<div class="page" style="background-image: url(images/land.svg); background-size: cover;">
-    <div>
-        <HeaderComponent />
-    </div>
-    @if (Body != null)
-    {   
-            <article class="content px-4">
-                @Body
-            </article>
-    }
-    else
-    {
-        <main class="mainLayoutClass">
-            <div class="sidebar">
-                
-            </div>
+<div class="page">
+    <HeaderComponent />
 
-        </main>
-    }
+    <div class="central-container">
+        <NavMenu />
+        <ProductIcon />
+
+    </div>
+    <main class="mainLayoutClass">
+        <article class="content px-4">
+            @Body
+        </article>
+
+    </main>
 </div>

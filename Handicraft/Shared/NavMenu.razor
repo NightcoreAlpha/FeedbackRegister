@@ -1,12 +1,64 @@
 ﻿@page "/NavMenu"
 @using static Handicraft.Data.ConnectDB;
 
-<link rel="stylesheet" href="css/Components.css" />
+    <div class="@NavMenuCssClass">
+        <div class="navbar navbar-dark" style="">
+            <a class="select color-selector" href="">Выберите категорию</a>
+        </div>
+        <nav class="select color-selector px-1">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="counter">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Counter
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="fetchdata">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+                </NavLink>
+            </div>
 
-<body>
-    <div class="container" style="opacity:0.8">  
+        </nav>
+    </div>
+    
+@*<body>
+    <div class="container" style="opacity:0.8">
         <div class="homepage-top-grid">
-            <div class="homepage-top-grid__menu" id="homepage-desktop-menu-wrap">       
+            <div class="homepage-top-grid__menu" id="homepage-desktop-menu-wrap">
 
                         <nav class="menu-desktop__root-info">
                             <img src="images/clothes.svg" style="width:32px;height:32px;margin:25px"/>
@@ -39,7 +91,7 @@
             </div>
         </div>
     </div>
-</body>
+</body>*@
 
 @*<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
