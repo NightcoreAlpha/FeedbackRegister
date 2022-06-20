@@ -1,60 +1,73 @@
 ﻿@page "/NavMenu"
+@using Handicraft.Data
+@using static Handicraft.Data.GetDataClass;
 @using static Handicraft.Data.ConnectDB;
 
-    <div class="@NavMenuCssClass">
-        <div class="navbar navbar-dark" style="">
-            <a class="select color-selector" href="">Выберите категорию</a>
-        </div>
-        <nav class="select color-selector px-1">
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="oi oi-home" aria-hidden="true"></span> Home
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="counter">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Counter
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                </NavLink>
-            </div>
-            <div class="nav-item px-3">
-                <NavLink class="nav-link" href="fetchdata">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                </NavLink>
-            </div>
+@*<div class="@NavMenuCssClass">
+    <div class="navbar-top" style="">
+        <a class="nav-top-word" href="">Выберите категорию</a>
+        <button class="oi oi-plus nav-button" onclick=@visibleNavMenu></button>
 
-        </nav>
     </div>
+    <nav class="select color-selector px-1" style="visibility:@visible">
+
+
+        @if (types.Count > 0)
+            @foreach (var type in types)
+            {
+                <div class="nav-item px-5"><a href="" class="nav-link oi oi-list-rich ">@type.name</a></div>
+                <div class="nav-item px-3">
+        <NavLink class="" href="fetchdata">
+        @type.name
+        </NavLink>
+        </div>
+
+            }
+
+    </nav>
+
+</div>*@
+    <div class="central-container">
+
+<div class="navbar-top" style="">
+
+    <RadzenDataGrid AllowFiltering="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="@destroyLogic"
+                    AllowSorting="false" TItem="ConnectDB.Type" Data="@types" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="100px" @bind-Value=@typesic
+                    href=@productIcon>
+        <Columns>
+            <RadzenDataGridColumn TItem="ConnectDB.Type" Property="id" Title="ID" Visible="false"></RadzenDataGridColumn>
+            <RadzenDataGridColumn TItem="ConnectDB.Type" Property="name" Title="Выберите категорию" Width="150px">
+                <HeaderTemplate>
+                    <div>
+                        <a href="/">Выберите категорию</a>
+                        <button class="oi oi-plus nav-button" onclick=@renderLogicFunction></button>
+                    </div>
+                </HeaderTemplate>
+                <Template Context="typ">
+                    @typ.name
+                    @if (typesic[0].name == typ.name)
+                    {
+                        <div>
+                            <button class="oi oi-minus nav-button" onclick=@deleteTypeClick></button>
+                        </div>
+                    }
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
     
+    <div class="@addTypeLogic">
+        <input class="input-type-field" type="text" @bind=@typeName />
+        <button class="add-buttons" onclick="@addTypeClick">Добавить</button>
+        <button class="add-buttons" onclick="@cancelTypeClick">Отмена</button>
+    </div>
+</div>
+</div>
+@if (typesic.Count > 0)
+    {@**@
+        <ProductIcon TypeProduct=@typesic[0] >
+        </ProductIcon>
+    }
 @*<body>
     <div class="container" style="opacity:0.8">
         <div class="homepage-top-grid">
@@ -128,10 +141,104 @@
 </div>*@
 
 @code {
+    //
     private bool collapseNavMenu = true;
-
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    //
+    ProductIcon productIcon;
+    string visible = "hidden";
+    bool visiblebool = true;
+    string destroyLogic = "renderLogic";
+    string addTypeLogic = "add-type-destroy";
+    string typeName = "";
+    List<ConnectDB.Type>? types = new List<ConnectDB.Type>();
+    IList<ConnectDB.Type>? typesic = new List<ConnectDB.Type>();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        uploadData();
+    }
+    public void uploadData()
+    {
+        types = GetDataClass.getTypes();
+        typesic = types.Take(1).ToList();
 
+    }
+    
+    public void visibleNavMenu()
+    {
+        if (visiblebool == false)
+        {
+            visiblebool = true;
+        }
+        else visiblebool = false;
+
+        if (visible == "hidden")
+        {
+            visible = "visible";
+        }
+        else visible = "hidden";
+    }
+    public void renderLogicFunction()
+    {
+        if (destroyLogic == "destroyLogic")
+        {
+            destroyLogic = "renderLogic";
+            addTypeLogic = "add-type-destroy";
+        }
+        else
+        {
+            destroyLogic = "destroyLogic";
+            addTypeLogic = "add-type";
+        }
+    }
+    public void addTypeClick()
+    {
+        //addTypeClick
+        if (typeName != "")
+        {
+            ConnectDB.Type newType = new ConnectDB.Type
+                {
+                    id = Guid.NewGuid(),
+                    name = typeName
+                };
+            if (newType != null)
+            {
+                using (var db = new ConnectContext("postgres", "postgres"))
+                {
+                    db.types?.Add(newType);
+                    db.SaveChanges();
+                    uploadData();
+
+                    renderLogicFunction();
+                }
+            }
+        }
+    }
+    public void deleteTypeClick()
+    {
+        Guid idType = typesic[0].id;
+        if (idType != Guid.Empty)
+        {
+            using (var db = new ConnectContext("postgres", "postgres"))
+            {
+                var type = db.types.Where(x => x.id == idType).ToList();
+
+                db.Remove(type[0]);
+                db.SaveChanges();
+                uploadData();
+            }
+        }
+    }
+    public void cancelTypeClick()
+    {
+        renderLogicFunction();
+
+    }
+    public void destroyProduct()
+    {
+        
+    }
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;

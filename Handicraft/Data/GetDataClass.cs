@@ -9,6 +9,34 @@ namespace Handicraft.Data
 {
     public class GetDataClass
     {
+        public static List<ConnectDB.Type> getTypes()
+        {
+            List<ConnectDB.Type>? types = new List<ConnectDB.Type>();
+            using (var db = new ConnectContext("postgres","postgres"))
+            {
+                types = db.types?.ToList();
+            }
+            return types;
+        }
+        public static List<Product> getProducts()
+        {
+            List<Product>? products = new List<Product>();
+            using (var db = new ConnectContext("postgres","postgres"))
+            {
+                products = db.products?.ToList();
+            }
+            return products;
+        }
+        public static List<Product> getProductsType(ConnectDB.Type idType)
+        {
+            List<Product>? products = new List<Product>();
+            using (var db = new ConnectContext("postgres", "postgres"))
+            {
+                products = db.products?.Where(x=>x.type == idType).ToList();
+                //products = db.products?.ToList();
+            }
+            return products;
+        }
         /*public List<Employee>? employee = new List<Employee>();
         public List<Role>? role = new List<Role>();
         public List<Customer>? customers = new List<Customer>();

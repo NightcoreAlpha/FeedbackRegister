@@ -69,7 +69,7 @@ namespace Handicraft.Data
             public int? price { get; set; }
             public bool? stock { get; set; }
             public string? comments { get; set; }
-            public Type? id_type { get; set; }
+            public Type? type { get; set; }
         }
         public class Favourites
         {

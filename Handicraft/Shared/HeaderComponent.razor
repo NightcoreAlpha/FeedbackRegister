@@ -1,5 +1,5 @@
-﻿<div class="info-container">
-    <div class="info-line" style="">
+﻿<header>
+    <div class="info-line">
         <ul class="ul-item">
             <li class="li-item">
                 <img src="images/location.svg" style="width:15px;height:28px;" />
@@ -17,11 +17,11 @@
             </li>
         </ul>
     </div>
-    <div class="panel-line" style="">
+    <nav class="panel-line">
         <div class="panel-item">
-            <img src="images/logoHC.svg" />
+            <a href="/"><img src="images/logoHC.svg" /></a>
             <div class="panel-search">
-                <input class="input-place icon-clear" type="search" placeholder="Поиск по сайту" autocomplete="on">
+                <input class="input-place" type="search" placeholder="Поиск по сайту" autocomplete="on">
                 <img src="images/loupe.svg" class="search-icon" />
             </div>
             <div class="user-elements">
@@ -33,11 +33,14 @@
                     <img src="images/cart.svg" style="width:24px;height:24px">
                     <span>Корзина</span>
                 </a>
+                <a class="user-item" href="/">
+
+                    <span>Регистрация</span>
+                </a>
             </div>
         </div>
-    </div>
-</div>
-
+    </nav>
+</header>
 @code {
 
 }

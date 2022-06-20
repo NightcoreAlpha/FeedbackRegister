@@ -63,11 +63,136 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
-.column_height_class table td:first-child {
-    line-height: 75px;
-    /*table td:first-child*/
+.column_height_class table {
+    width: 225px;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 15px;
+    border: none;
+    background: transparent;
 }
+
+    .column_height_class table td:first-child {
+        line-height: 40px;
+        background: linear-gradient(to top, rgba(32,33,79,0.5), rgba(102,141,181,0.5));
+        background-color: white;
+        /*table td:first-child*/
+    }
+
+    .column_height_class table td:hover {
+        color: rgba(32,33,79,0.5);
+    }
+
+    .column_height_class table td:visited {
+        color: rgba(32,33,79,0.5);
+    }
+
 .myDivClass {
-    display:flex;
-    align-items:center !important;
+    display: flex;
+    align-items: center !important;
 }
+
+.destroyLogic table td:first-child {
+    display: none;
+}
+
+.destroyLogic table {
+    background: linear-gradient(to top, rgba(32,33,79,0.5), rgba(102,141,181,0.5));
+    text-align: center;
+    width: 250px;
+    border: none;
+    box-sizing: unset;
+}
+
+    .destroyLogic table tr th {
+        background-color: transparent;
+        background-color: white;
+        height: 50px;
+    }
+
+.destroyLogic a {
+    color: black;
+    outline: 0;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+    .destroyLogic a:hover {
+        color: rgba(0, 0, 0, 0.7);
+        outline: 0;
+        text-decoration: none
+    }
+
+.renderLogic {
+    background: linear-gradient(to top, rgba(32,33,79,0.5), rgba(102,141,181,0.5));
+    /*align-items: center;*/
+    text-align: center;
+    width: 250px;
+    border: none;
+    box-sizing: unset;
+    height: 100%;
+}
+
+    .renderLogic tbody td {
+        line-height: 40px;
+        background-color: transparent;
+        background-color: white;
+    }
+
+
+.renderLogic thead tr th {
+    background-color: transparent;
+    background-color: white;
+    height: 50px;
+}
+
+.renderLogic a {
+    color: black;
+    outline: 0;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+    .renderLogic a:hover {
+        color: rgba(0, 0, 0, 0.7);
+        outline: 0;
+        text-decoration: none
+    }
+
+.renderLogic table td:visited {
+    color: rgba(32,33,79,0.5);
+}
+
+.renderLogic table tbody td span {
+    font-size: 20px !important;
+}
+.renderLogic table tbody td span div {
+    display: inline-flex;
+}
+
+.navbar-top {
+    display: inline-table;
+    /*font-size: 18px;
+    background: linear-gradient(to top, rgba(32,33,79,0.5), rgba(102,141,181,0.5));
+    display: flex;
+    /*align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    height: 100%;
+    width: 225px;
+    border-top-left-radius: 15px;
+    border: none;
+    background: transparent;*/
+}
+
+    .navbar-top th {
+        /**border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border: none;*/
+    }
+
+    .navbar-top table {
+        /*border: none;*/
+    }
+
