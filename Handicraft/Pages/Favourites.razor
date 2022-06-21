@@ -1,36 +1,25 @@
 ﻿@using static Handicraft.Data.GetDataClass;
 @using static Handicraft.Data.ConnectDB;
-@inject NavigationManager NavigationManager
-
 <div class="product-container">
     @if (TypeProduct != null)
     {
         @foreach (var prod in products)
         {
-            <div class="product-field">
+            @*<div class="product-field">
                 <span class="name"><a class="product-link" href="product/@prod.id">@prod.name</a></span>
                 <span class="price">@prod.price</span>
                 <button class="button">Заказать</button>
 
-            </div>
+            </div>*@
         }
     }
 
 </div>
 @code {
-    List<Product>? products = new List<Product>();
-    [Parameter]
     public Data.ConnectDB.Type? TypeProduct { get; set; }
-    NavLink navlink;
+    List<Product>? products = new List<Product>();
 
-    public void productLink()
-    {
-        /*if (products[0] != null)
-        {
-            var test = navlink;
-            NavigationManager.NavigateTo("product/"+products[0].id.ToString());
-        }*/
-    }
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -45,7 +34,7 @@
     {
         if (TypeProduct != null)
         {
-            products = getProductsType(TypeProduct);
+            //products = getProductsType(TypeProduct);
         }
     }
 }

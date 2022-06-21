@@ -37,6 +37,16 @@ namespace Handicraft.Data
             }
             return products;
         }
+        public static List<Product> getProduct(Guid idProduct)
+        {
+            List<Product>? products = new List<Product>();
+            using (var db = new ConnectContext("postgres", "postgres"))
+            {
+                products = db.products?.Where(x=>x.id == idProduct).Include(x=>x.type).ToList();
+                //products = db.products?.ToList();
+            }
+            return products;
+        }
         /*public List<Employee>? employee = new List<Employee>();
         public List<Role>? role = new List<Role>();
         public List<Customer>? customers = new List<Customer>();

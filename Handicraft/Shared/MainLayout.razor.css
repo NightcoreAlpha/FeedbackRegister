@@ -168,12 +168,3 @@ main {
     border-radius: 8px;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 16%);
 }
-
-.central-container {
-    margin:15px;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1180px;
-    display: flex;
-    padding: 0px;
-}

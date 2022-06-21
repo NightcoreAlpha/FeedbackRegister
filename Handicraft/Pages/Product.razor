@@ -1,0 +1,35 @@
+﻿@page "/product/{id}"
+@using static Handicraft.Data.GetDataClass;
+@using static Handicraft.Data.ConnectDB;
+@using static Handicraft.Pages.Product;
+
+<div class="central-container">
+
+    <div class="product-page">
+
+        <span class="name">@product[0].name</span>
+        <span class="price">@product[0].price</span>
+        <span class="color">@product[0].color</span>
+        <span class="material">@product[0].material</span>
+        <span class="type-name">@product[0].type?.name</span>
+        <span class="stock">@product[0].stock</span>
+        <span class="comments">@product[0].comments</span>
+        <RadzenButton class="oi oi-cart blue-button cart-button" Text="В корзину"/>
+        <RadzenButton class="oi oi-heart blue-button favourites-button" Text="В избранное"/>
+    </div>
+</div>
+
+@code {
+
+    List<Data.ConnectDB.Product> product = new List<Data.ConnectDB.Product>();
+
+    protected override void OnInitialized()
+    {
+        Guid idproduct = new Guid(id);
+        base.OnInitialized();
+        product = Data.GetDataClass.getProduct(idproduct);
+    }
+
+    [Parameter]
+    public string id { get; set; }
+}

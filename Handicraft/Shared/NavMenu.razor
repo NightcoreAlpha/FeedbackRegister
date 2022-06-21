@@ -27,47 +27,47 @@
     </nav>
 
 </div>*@
-    <div class="central-container">
+<div class="central-container">
 
-<div class="navbar-top" style="">
+    <div class="navbar-top" style="">
 
-    <RadzenDataGrid AllowFiltering="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="@destroyLogic"
-                    AllowSorting="false" TItem="ConnectDB.Type" Data="@types" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="100px" @bind-Value=@typesic
-                    href=@productIcon>
-        <Columns>
-            <RadzenDataGridColumn TItem="ConnectDB.Type" Property="id" Title="ID" Visible="false"></RadzenDataGridColumn>
-            <RadzenDataGridColumn TItem="ConnectDB.Type" Property="name" Title="Выберите категорию" Width="150px">
-                <HeaderTemplate>
-                    <div>
-                        <a href="/">Выберите категорию</a>
-                        <button class="oi oi-plus nav-button" onclick=@renderLogicFunction></button>
-                    </div>
-                </HeaderTemplate>
-                <Template Context="typ">
-                    @typ.name
-                    @if (typesic[0].name == typ.name)
-                    {
+        <RadzenDataGrid AllowFiltering="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="@destroyLogic"
+                        AllowSorting="false" TItem="ConnectDB.Type" Data="@types" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="100px" @bind-Value=@typesic
+                        href=@productIcon>
+            <Columns>
+                <RadzenDataGridColumn TItem="ConnectDB.Type" Property="id" Title="ID" Visible="false"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ConnectDB.Type" Property="name" Title="Выберите категорию" Width="150px">
+                    <HeaderTemplate>
                         <div>
-                            <button class="oi oi-minus nav-button" onclick=@deleteTypeClick></button>
+                            <a href="/">Выберите категорию</a>
+                            <button class="oi oi-plus nav-button" onclick=@renderLogicFunction></button>
                         </div>
-                    }
-                </Template>
-            </RadzenDataGridColumn>
-        </Columns>
-    </RadzenDataGrid>
-    
-    <div class="@addTypeLogic">
-        <input class="input-type-field" type="text" @bind=@typeName />
-        <button class="add-buttons" onclick="@addTypeClick">Добавить</button>
-        <button class="add-buttons" onclick="@cancelTypeClick">Отмена</button>
+                    </HeaderTemplate>
+                    <Template Context="typ">
+                        @typ.name
+                        @if (typesic[0].name == typ.name)
+                        {
+                            <div>
+                                <button class="oi oi-minus nav-button" onclick=@deleteTypeClick></button>
+                            </div>
+                        }
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+        <div class="@addTypeLogic">
+            <input class="input-type-field" type="text" @bind=@typeName />
+            <button class="add-buttons" onclick="@addTypeClick">Добавить</button>
+            <button class="add-buttons" onclick="@cancelTypeClick">Отмена</button>
+        </div>
     </div>
 </div>
-</div>
 @if (typesic.Count > 0)
-    {@**@
-        <ProductIcon TypeProduct=@typesic[0] >
-        </ProductIcon>
-    }
+{@**@
+    <ProductIcon TypeProduct=@typesic[0]>
+    </ProductIcon>
+}
 @*<body>
     <div class="container" style="opacity:0.8">
         <div class="homepage-top-grid">
@@ -164,7 +164,7 @@
         typesic = types.Take(1).ToList();
 
     }
-    
+
     public void visibleNavMenu()
     {
         if (visiblebool == false)
@@ -237,7 +237,7 @@
     }
     public void destroyProduct()
     {
-        
+
     }
     private void ToggleNavMenu()
     {
