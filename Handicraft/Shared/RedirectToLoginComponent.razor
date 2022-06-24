@@ -1,0 +1,13 @@
+﻿@inject NavigationManager navigationManager
+
+
+<h3>RedirectToLoginComponent</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        navigationManager.NavigateTo("/registration");
+    }
+
+}

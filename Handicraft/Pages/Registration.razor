@@ -1,0 +1,118 @@
+﻿@page "/registration"
+@using static Handicraft.Data.GetDataClass;
+@using static Handicraft.Data.ConnectDB;
+@using static Handicraft.Data.RegistrationModel;
+@inject NotificationService NotificationService
+@inherits Data.RegistrationModel
+
+@*<div class="col-lg-6 col-xl-4 p-3">
+    <RadzenCard>
+        <h4 class="mb-4">Error</h4>
+        <RadzenButton Text="Show error notification" Class="w-100"
+                      ButtonStyle="ButtonStyle.Danger"
+                      Click=@(args => ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error Summary", Detail = "Error Detail", Duration = 4000 })) />
+    </RadzenCard>
+</div>*@
+
+<div class="central-container">
+    <div>
+        <button class="invisible-wall"></button>
+    </div>
+    <EditForm Model="@LoginData" OnValidSubmit="LoginAsync">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <RadzenCard class="reg-field">
+            <h4 class="mb-4">Регистрация пользователя</h4>
+            <h5 class="mb-2">Имя</h5>
+            <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
+@*            <h5 class="mb-2 mt-2">Логин</h5>
+            <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
+*@            <h5 class="mb-2 mt-2">Пароль</h5>
+            <RadzenPassword Placeholder="" @bind-Value=LoginData.Password />
+            @*            <h5 class="mb-2 mt-2">Подтверждение пароля</h5>
+            <RadzenPassword Placeholder="" @bind-Value=@password2 />
+            *@            @*<h5 class="mb-2 mt-2">Email адресс</h5>
+            <RadzenTextBox Placeholder="" Value="@email"/>
+            <h5 class="mb-2 mt-2">Телефон</h5>
+            <RadzenTextBox Placeholder="" Value="@telefon"/>
+            <h5 class="mb-2 mt-2">Контакты для связи с вами</h5>
+            <RadzenTextArea Placeholder="" class="textarea-height" Value="@contacts"/>*@
+            <RadzenButton class="oi oi- blue-button reg-button" Text="Зарегистрироваться" Click="@registration" />
+            <p class="my-4">
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </p>
+            <RadzenNotification />
+        </RadzenCard>
+    </EditForm>
+</div>
+
+@code {
+    public string? name { get; set; }
+    public string? login { get; set; }
+    public string? password { get; set; }
+    public string? password2 { get; set; }
+    public string? email { get; set; }
+    public string? telefon { get; set; }
+    public string? contacts { get; set; }
+
+    //List<Data.ConnectDB.Product> product = new List<Data.ConnectDB.Product>();
+
+    protected override void OnInitialized()
+    {
+        //Guid idproduct = new Guid(id);
+        base.OnInitialized();
+        //product = Data.GetDataClass.getProduct(idproduct);
+    }
+    public void registration()
+    {
+        string? messageError = "";
+        //string? message = "Опа, ошибка!1";
+        /*if (password?.Length < 6)
+            messageError = "Слишком короткий пароль, введите минимум 6 символов";
+        if (password?.Length > 15)
+            messageError = "Слишком длинный пароль, введите до 15 символов";
+        if (password != password2)
+            messageError = "Пароли не совпадают";
+        if (password == null || password2 == null)
+            messageError = "Введите пароль";
+        if (login == null)
+            messageError = "Введите логин";
+        if (name == null)
+            messageError = "Введите имя";*/
+        if (messageError != "")
+        {
+            /*var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+            NotificationService.Notify(message);*/
+        }
+        else
+        {
+            /*using (var db = new ConnectContext("postgres", "postgres"))
+            {
+                var checkLogin = db.users.Where(x => x.login == login).ToList();
+                if (checkLogin.Count > 0)
+                {
+                    messageError = "Такой логин уже существует, введите другой";
+                    var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+                    NotificationService.Notify(message);
+                    return;
+                }
+                var newUser = new User
+                    {
+                        name = LoginData.UserName,
+                        login = LoginData.Login,
+                        password = LoginData.Password,
+                        date = DateTime.UtcNow
+                    };
+                db.users.Add(newUser);
+                db.SaveChanges();
+            }*/
+        }
+
+    }
+    //[Parameter]
+    //public string id { get; set; }
+    void ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+    }
+}

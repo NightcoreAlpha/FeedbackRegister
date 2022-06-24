@@ -1,0 +1,30 @@
+﻿@page "/authorization"
+@using static Handicraft.Data.GetDataClass;
+@using static Handicraft.Data.ConnectDB;
+
+<div class="central-container">
+    <div>
+        <button class="invisible-wall"></button>
+    </div>
+    <div class="registration-field">
+
+
+        <RadzenButton class="oi oi-cart blue-button cart-button" Text="В корзину" />
+        <RadzenButton class="oi oi-heart blue-button favourites-button" Text="В избранное" />
+    </div>
+</div>
+
+@code {
+
+    //List<Data.ConnectDB.Product> product = new List<Data.ConnectDB.Product>();
+
+    protected override void OnInitialized()
+    {
+        //Guid idproduct = new Guid(id);
+        base.OnInitialized();
+        //product = Data.GetDataClass.getProduct(idproduct);
+    }
+
+    //[Parameter]
+    //public string id { get; set; }
+}

@@ -204,26 +204,62 @@ a, .btn-link {
     display: flex;
     padding: 0px;
 }
+
 .maincontainer {
     position: relative;
     flex-direction: row;
 }
+
 .blue-button {
     background-color: rgb(102 141 181) !important;
     /*background: linear-gradient(to top, rgba(102, 141, 181,0.9), rgba(102, 141, 181,0.1));*/
 }
-.cart-button {
-width:200px !important;
-height:50px !important;
-grid-column: 3;
-    grid-row: 4;
 
+.cart-button {
+    width: 200px !important;
+    height: 50px !important;
+    grid-column: 3;
+    grid-row: 4;
 }
+
 .favourites-button {
     width: 200px !important;
     height: 50px !important;
     grid-column: 2;
     grid-row: 4;
     justify-self: end;
-    margin-right:10px;
+    margin-right: 10px;
+}
+
+.invisible-wall {
+    width: 250px;
+}
+
+.reg-field {
+    border-radius: 8px !important;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 16%);
+    height: 100% !important;
+    width: 100% !important;
+    padding: 12px 10px;
+    margin: 0px 0px 0px 15px !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.textarea-height {
+    box-sizing: unset !important;
+    height: 100px !important;
+}
+.reg-button {
+    width: 300px !important;
+    height: 50px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 20px !important;
+    margin-bottom: 10px !important;
+    padding: 0px !important;
+}
+.invisible-wall {
+    width: 250px;
+    visibility: hidden;
 }

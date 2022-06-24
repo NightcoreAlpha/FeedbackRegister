@@ -42,12 +42,13 @@ namespace Handicraft.Data
         {
             public Guid id { get; set; }
             public string? name { get; set; }
-            public string? nickname { get; set; }
+            public string? login { get; set; }
             public string? email { get; set; }
             public string? telefon { get; set; }
             public DateTime? date { get; set; }
             public string? contacts { get; set; }
             public string? comment { get; set; }
+            public string? password { get; set; }
         }
         public class Type
         {

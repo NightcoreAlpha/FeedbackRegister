@@ -1,11 +1,37 @@
 ﻿@page "/"
+@inject AuthenticationStateProvider Provider
 
 <div class="central-container">
         <NavMenu />
-        @*<ProductIcon />*@
 
-    </div>
+    @*<ProductIcon />*@
+</div>
+<div>
+<AuthorizeView>
+    <Authorized>
+        Welcome, sir @context.User.Identity.Name
+
+    </Authorized>
+    <NotAuthorized>
+        <RedirectToLoginComponent />
+        @*Вы кто такие, я вас не звал, идите на страницу регистрации <a href="/registration">Регистрация</a>*@
+    </NotAuthorized>
+</AuthorizeView>
+</div>
+@if (!string.IsNullOrWhiteSpace(userName))
+{
+    <span>@userName</span>
+}
+
 @code {
+    [Inject] private AuthenticationStateProvider provider { get; set; }
+    private string userName = "Anonymous";
 
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await Provider.GetAuthenticationStateAsync();
+        userName = state?.User?.Identity?.Name ?? "Sorry";
+        //base.OnInitializedAsync();
+    }
 }
 

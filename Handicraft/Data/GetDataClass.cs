@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using static Handicraft.Data.ConnectDB;
 //using static Handicraft.Data.ConnectClass;
@@ -46,6 +47,16 @@ namespace Handicraft.Data
                 //products = db.products?.ToList();
             }
             return products;
+        }
+        public List<Claim> GetUser(string login, string password)
+        {
+            List<Claim>? claimsList = new List<Claim>();
+            //using (var db = new ConnectContext("postgres", "postgres"))
+            //{
+            //    products = db.users?.Where(x => x.type == idType).ToList();
+            //    //products = db.products?.ToList();
+            //}
+            return claimsList;
         }
         /*public List<Employee>? employee = new List<Employee>();
         public List<Role>? role = new List<Role>();
