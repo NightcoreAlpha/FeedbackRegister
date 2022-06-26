@@ -2,32 +2,13 @@
 @using Handicraft.Data
 @using static Handicraft.Data.GetDataClass;
 @using static Handicraft.Data.ConnectDB;
+@using static Handicraft.Data.RegistrationModel;
+@using static Handicraft.Pages.Registration;
 
-@*<div class="@NavMenuCssClass">
-    <div class="navbar-top" style="">
-        <a class="nav-top-word" href="">Выберите категорию</a>
-        <button class="oi oi-plus nav-button" onclick=@visibleNavMenu></button>
-
-    </div>
-    <nav class="select color-selector px-1" style="visibility:@visible">
+@inject AuthenticationStateProvider Provider
 
 
-        @if (types.Count > 0)
-            @foreach (var type in types)
-            {
-                <div class="nav-item px-5"><a href="" class="nav-link oi oi-list-rich ">@type.name</a></div>
-                <div class="nav-item px-3">
-        <NavLink class="" href="fetchdata">
-        @type.name
-        </NavLink>
-        </div>
-
-            }
-
-    </nav>
-
-</div>*@
-<div class="central-container">
+<div class="left-container">
 
     <div class="navbar-top" style="">
 
@@ -63,124 +44,38 @@
         </div>
     </div>
 </div>
-
-                <a class="oi oi-account-logout" aria-hidden="true" href="logout">Выход</a> 
-
 @if (typesic.Count > 0)
-{@**@
+{
     <ProductIcon TypeProduct=@typesic[0]>
     </ProductIcon>
 }
-@*<body>
-    <div class="container" style="opacity:0.8">
-        <div class="homepage-top-grid">
-            <div class="homepage-top-grid__menu" id="homepage-desktop-menu-wrap">
-
-                        <nav class="menu-desktop__root-info">
-                            <img src="images/clothes.svg" style="width:32px;height:32px;margin:25px"/>
-                            <a class="ui-link menu-desktop__root-title" href="/">Одежда</a>
-                        </nav>
-                        <nav class="menu-desktop__root-info">
-                            <img src="images/belt.svg" style="width:32px;height:32px;margin:25px"/>
-                            <a class="ui-link menu-desktop__root-title" href="/">Ремни</a>
-                        </nav>
-                        <nav class="menu-desktop__root-info">
-                            <img src="images/bag.svg" style="width:32px;height:32px;margin:25px"/>
-                            <a class="ui-link menu-desktop__root-title" href="/">Сумки</a>
-                        </nav>
-                        <nav class="menu-desktop__root-info">
-                            <img src="images/backpack.svg" style="width:32px;height:32px;margin:25px"/>
-                            <a class="ui-link menu-desktop__root-title" href="/">Рюкзаки</a>
-                        </nav>
-                        <nav class="menu-desktop__root-info">
-                            <img src="images/wallet.svg" style="width:32px;height:32px;margin:25px"/>
-                            <a class="ui-link menu-desktop__root-title" href="/">Бумажники</a>
-                        </nav>
-                        <nav class="menu-desktop__root-info">
-                            <img src="images/credit_cards.svg" style="width:32px;height:32px;margin:25px"/>
-                            <a class="ui-link menu-desktop__root-title" href="/">Визитницы</a>
-                        </nav>
-            </div>
-            <div class="homepage-top-grid__center" style="width:1100px !important">
-                <span class="homepage-slider-wrap">
-                </span>
-            </div>
-        </div>
-    </div>
-</body>*@
-
-@*<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Обратная связь</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Главная
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-people" aria-hidden="true"></span> Сотрудники
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="TaskList">
-                <span class="oi oi-list" aria-hidden="true"></span> Список задач
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="LookupPage">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Справочники
-            </NavLink>
-        </div>
-    </nav>
-</div>*@
-
 @code {
-    //
-    private bool collapseNavMenu = true;
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-    //
+    List<User> user { get; set; }
     ProductIcon productIcon;
-    string visible = "hidden";
-    bool visiblebool = true;
     string destroyLogic = "renderLogic";
     string addTypeLogic = "add-type-destroy";
     string typeName = "";
+    List<string> userData = new List<string>();
     List<ConnectDB.Type>? types = new List<ConnectDB.Type>();
     IList<ConnectDB.Type>? typesic = new List<ConnectDB.Type>();
     protected override void OnInitialized()
     {
         base.OnInitialized();
         uploadData();
+        //user =  ;
     }
+    /*protected override async Task OnInitializedAsync()
+        {
+        var state = await Provider.GetAuthenticationStateAsync();
+        userData.Add(state?.User?.Identity?.Name ?? "Sorry");
+
+        //base.OnInitializedAsync();
+    }*/
     public void uploadData()
     {
         types = GetDataClass.getTypes();
         typesic = types.Take(1).ToList();
 
-    }
-
-    public void visibleNavMenu()
-    {
-        if (visiblebool == false)
-        {
-            visiblebool = true;
-        }
-        else visiblebool = false;
-
-        if (visible == "hidden")
-        {
-            visible = "visible";
-        }
-        else visible = "hidden";
     }
     public void renderLogicFunction()
     {
@@ -197,7 +92,6 @@
     }
     public void addTypeClick()
     {
-        //addTypeClick
         if (typeName != "")
         {
             ConnectDB.Type newType = new ConnectDB.Type
@@ -207,7 +101,7 @@
                 };
             if (newType != null)
             {
-                using (var db = new ConnectContext("postgres", "postgres"))
+                using (var db = new ConnectContext("",""))
                 {
                     db.types?.Add(newType);
                     db.SaveChanges();
@@ -223,10 +117,10 @@
         Guid idType = typesic[0].id;
         if (idType != Guid.Empty)
         {
-            using (var db = new ConnectContext("postgres", "postgres"))
+            using (var db = new ConnectContext("",""))
             {
                 var type = db.types.Where(x => x.id == idType).ToList();
-
+                if (type.Count > 0) return;
                 db.Remove(type[0]);
                 db.SaveChanges();
                 uploadData();
@@ -235,15 +129,7 @@
     }
     public void cancelTypeClick()
     {
+
         renderLogicFunction();
-
-    }
-    public void destroyProduct()
-    {
-
-    }
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
     }
 }

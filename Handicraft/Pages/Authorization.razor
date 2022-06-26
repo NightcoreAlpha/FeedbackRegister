@@ -1,6 +1,12 @@
 ﻿@page "/authorization"
+@page "/authorization"
+@using Handicraft.Data
 @using static Handicraft.Data.GetDataClass;
 @using static Handicraft.Data.ConnectDB;
+@using static Handicraft.Data.RegistrationModel;
+@inject NotificationService NotificationService
+@inherits Data.RegistrationModel
+@inject AuthenticationStateProvider Provider
 
 <div class="central-container">
     <div>
@@ -8,7 +14,36 @@
     </div>
     <div class="registration-field">
 
-
+        <div class="central-container">
+            <div>
+                <button class="invisible-wall"></button>
+            </div>
+            <EditForm Model="@LoginData" OnValidSubmit="LoginAsync">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <RadzenCard class="reg-field">
+                    <h4 class="mb-4">Регистрация пользователя</h4>
+                    <h5 class="mb-2">Имя</h5>
+                    <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
+                    @*<h5 class="mb-2 mt-2">Логин</h5>
+                    <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
+                    *@<h5 class="mb-2 mt-2">Пароль</h5>
+                    <RadzenPassword Placeholder="" @bind-Value=LoginData.Password />
+                    @*<h5 class="mb-2 mt-2">Подтверждение пароля</h5>
+                    <RadzenPassword Placeholder="" @bind-Value=@password2 />
+                    *@@*<h5 class="mb-2 mt-2">Email адресс</h5>
+                    <RadzenTextBox Placeholder="" Value="@email"/>
+                    <h5 class="mb-2 mt-2">Телефон</h5>
+                    <RadzenTextBox Placeholder="" Value="@telefon"/>
+                    <h5 class="mb-2 mt-2">Контакты для связи с вами</h5>
+                    <RadzenTextArea Placeholder="" class="textarea-height" Value="@contacts"/>*@
+                    <p class="my-4">
+                        <button type="submit" class="btn btn-primary" onclick=@GetUser>Log in</button>
+                    </p>
+                    <RadzenNotification />
+                </RadzenCard>
+            </EditForm>
+        </div>
         <RadzenButton class="oi oi-cart blue-button cart-button" Text="В корзину" />
         <RadzenButton class="oi oi-heart blue-button favourites-button" Text="В избранное" />
     </div>
@@ -24,7 +59,28 @@
         base.OnInitialized();
         //product = Data.GetDataClass.getProduct(idproduct);
     }
+    void ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+    }
+    public async void GetUser()
+    {
+        /*if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
+        {
+            ((TokenAuthenticationStateProvider)Provider).MakeUserAnonymous();
+        }*/
+        var state = await Provider.GetAuthenticationStateAsync();
 
+        var loginExist = state?.User?.Identity?.Name;
+        //if (loginExist == null)
+        if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
+        {
+
+            string messageError = "Не верные логин/пароль или пользователя не существует";
+            var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+            NotificationService.Notify(message);
+        }
+    }
     //[Parameter]
     //public string id { get; set; }
 }

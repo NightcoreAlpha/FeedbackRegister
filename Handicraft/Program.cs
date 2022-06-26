@@ -101,7 +101,5 @@ public class TokenAuthenticationStateProvider : AuthenticationStateProvider
         var anonymousPrincipal = new ClaimsPrincipal(anonymousIdentity);
         var authState = Task.FromResult(new AuthenticationState(anonymousPrincipal));
         NotifyAuthenticationStateChanged(authState);
-
-
     }
 }

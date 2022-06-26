@@ -3,16 +3,18 @@
 @inject AuthenticationStateProvider provider
 
 
-<h3>Logout</h3>
-
+<NavLink onclick=@logout>Выйти</NavLink>
 @code {
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        ((TokenAuthenticationStateProvider)provider).MakeUserAnonymous();
-        navigationManager.NavigateTo("/");
     }
+    public void logout()
+    {
+        ((TokenAuthenticationStateProvider)provider).MakeUserAnonymous();
+        navigationManager.NavigateTo("/", true);
 
+    }
 
 }

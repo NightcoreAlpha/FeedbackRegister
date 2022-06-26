@@ -10,10 +10,11 @@ namespace Handicraft.Data
 {
     public class GetDataClass
     {
+        public static List<User> userData { get; set; }
         public static List<ConnectDB.Type> getTypes()
         {
             List<ConnectDB.Type>? types = new List<ConnectDB.Type>();
-            using (var db = new ConnectContext("postgres","postgres"))
+            using (var db = new ConnectContext("postgres", "postgres"))
             {
                 types = db.types?.ToList();
             }
@@ -22,7 +23,7 @@ namespace Handicraft.Data
         public static List<Product> getProducts()
         {
             List<Product>? products = new List<Product>();
-            using (var db = new ConnectContext("postgres","postgres"))
+            using (var db = new ConnectContext("postgres", "postgres"))
             {
                 products = db.products?.ToList();
             }
@@ -33,7 +34,7 @@ namespace Handicraft.Data
             List<Product>? products = new List<Product>();
             using (var db = new ConnectContext("postgres", "postgres"))
             {
-                products = db.products?.Where(x=>x.type == idType).ToList();
+                products = db.products?.Where(x => x.type == idType).ToList();
                 //products = db.products?.ToList();
             }
             return products;
@@ -43,7 +44,7 @@ namespace Handicraft.Data
             List<Product>? products = new List<Product>();
             using (var db = new ConnectContext("postgres", "postgres"))
             {
-                products = db.products?.Where(x=>x.id == idProduct).Include(x=>x.type).ToList();
+                products = db.products?.Where(x => x.id == idProduct).Include(x => x.type).ToList();
                 //products = db.products?.ToList();
             }
             return products;
@@ -51,13 +52,25 @@ namespace Handicraft.Data
         public List<Claim> GetUser(string login, string password)
         {
             List<Claim>? claimsList = new List<Claim>();
-            //using (var db = new ConnectContext("postgres", "postgres"))
-            //{
-            //    products = db.users?.Where(x => x.type == idType).ToList();
-            //    //products = db.products?.ToList();
-            //}
+            /*using (var db = new ConnectContext())
+            {
+                //users = db.users?.Where(x => x.login == idType).ToList();
+                //products = db.products?.ToList();
+            }*/
             return claimsList;
         }
+
+        public static List<User> GetUserData(string login, string password)
+        {
+            List<User> user = new List<User>();
+            using (var db = new ConnectContext("",""))
+            {
+                user = db?.users?.Where(x => x.login == login && x.password == password).ToList();
+                var mess = "";
+            }
+            return user;
+        }
+
         /*public List<Employee>? employee = new List<Employee>();
         public List<Role>? role = new List<Role>();
         public List<Customer>? customers = new List<Customer>();

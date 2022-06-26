@@ -25,9 +25,14 @@ namespace Handicraft.Data
             public DbSet<Cart>? carts { get; set; }
             public DbSet<Add_favourite>? add_favourites { get; set; }
             public DbSet<Add_cart>? add_carts { get; set; }
+            
+
             public ConnectContext(string login, string password)
             {
-                Login = login; Password = password;
+                //Login = login; Password = password;
+                Login = "postgres";
+                Password = "postgres";
+
             }
             protected override void OnConfiguring(DbContextOptionsBuilder optionsbuilder)
             {

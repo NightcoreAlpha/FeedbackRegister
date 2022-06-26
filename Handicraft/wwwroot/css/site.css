@@ -263,3 +263,6 @@ a, .btn-link {
     width: 250px;
     visibility: hidden;
 }
+.left-container {
+    margin-right: auto;
+}

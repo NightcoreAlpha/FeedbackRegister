@@ -1,4 +1,6 @@
-﻿<header>
+﻿@inject AuthenticationStateProvider Provider
+
+<header>
     <div class="info-line">
         <ul class="ul-item">
             <li class="li-item">
@@ -36,13 +38,47 @@
                 <a class="user-item" href="/registration">
                     <span class="oi oi-people">Регистрация</span>
                 </a>
-                <a class="user-item" href="/authorization">
-                    <span class="oi oi-people">Войти</span>
-                </a>
+                @if (result == false)
+                {
+                    <a class="user-item" href="/authorization">
+                        <span class="oi oi-people">Войти</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="user-item" href="/logout">
+                        <span class="oi oi-people">@userName</span>
+                    </a>
+                    <Handicraft.Pages.Logout />
+                }
             </div>
         </div>
     </nav>
 </header>
 @code {
+    bool result = false;
+    string userName = "";
+    protected override void OnInitialized()
+    {
+        //Guid idproduct = new Guid(id);
 
+        base.OnInitialized();
+        GetUser();
+        //product = Data.GetDataClass.getProduct(idproduct);
+    }
+    public async void GetUser()
+    {
+        var state = await Provider.GetAuthenticationStateAsync();
+        var loginExist = state?.User?.Identity?.Name;
+        if (loginExist == null)
+        {
+            result = false;
+        }
+        else
+        {
+            result = true;
+            userName = state?.User?.Identity?.Name;
+            StateHasChanged();
+        }
+    }
 }

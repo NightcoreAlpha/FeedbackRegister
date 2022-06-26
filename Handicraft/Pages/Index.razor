@@ -7,21 +7,21 @@
     @*<ProductIcon />*@
 </div>
 <div>
-<AuthorizeView>
+@*<AuthorizeView>
     <Authorized>
         Welcome, sir @context.User.Identity.Name
 
     </Authorized>
     <NotAuthorized>
-        <RedirectToLoginComponent />
-        @*Вы кто такие, я вас не звал, идите на страницу регистрации <a href="/registration">Регистрация</a>*@
+       @* <RedirectToLoginComponent />
+        Вы кто такие, я вас не звал, идите на страницу регистрации <a href="/registration">Регистрация</a>
     </NotAuthorized>
-</AuthorizeView>
+</AuthorizeView>*@
 </div>
-@if (!string.IsNullOrWhiteSpace(userName))
+@*@if (!string.IsNullOrWhiteSpace(userName))
 {
     <span>@userName</span>
-}
+}*@
 
 @code {
     [Inject] private AuthenticationStateProvider provider { get; set; }
@@ -31,6 +31,7 @@
     {
         var state = await Provider.GetAuthenticationStateAsync();
         userName = state?.User?.Identity?.Name ?? "Sorry";
+
         //base.OnInitializedAsync();
     }
 }

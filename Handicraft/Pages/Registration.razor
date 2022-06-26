@@ -1,9 +1,12 @@
 ﻿@page "/registration"
+@using Handicraft.Data
 @using static Handicraft.Data.GetDataClass;
 @using static Handicraft.Data.ConnectDB;
 @using static Handicraft.Data.RegistrationModel;
 @inject NotificationService NotificationService
 @inherits Data.RegistrationModel
+@inject AuthenticationStateProvider Provider
+
 
 @*<div class="col-lg-6 col-xl-4 p-3">
     <RadzenCard>
@@ -25,9 +28,9 @@
             <h4 class="mb-4">Регистрация пользователя</h4>
             <h5 class="mb-2">Имя</h5>
             <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
-@*            <h5 class="mb-2 mt-2">Логин</h5>
+            @*            <h5 class="mb-2 mt-2">Логин</h5>
             <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
-*@            <h5 class="mb-2 mt-2">Пароль</h5>
+            *@            <h5 class="mb-2 mt-2">Пароль</h5>
             <RadzenPassword Placeholder="" @bind-Value=LoginData.Password />
             @*            <h5 class="mb-2 mt-2">Подтверждение пароля</h5>
             <RadzenPassword Placeholder="" @bind-Value=@password2 />
@@ -39,7 +42,7 @@
             <RadzenTextArea Placeholder="" class="textarea-height" Value="@contacts"/>*@
             <RadzenButton class="oi oi- blue-button reg-button" Text="Зарегистрироваться" Click="@registration" />
             <p class="my-4">
-                <button type="submit" class="btn btn-primary">Log in</button>
+                <button type="submit" class="btn btn-primary" onclick=@GetUser>Log in</button>
             </p>
             <RadzenNotification />
         </RadzenCard>
@@ -63,22 +66,29 @@
         base.OnInitialized();
         //product = Data.GetDataClass.getProduct(idproduct);
     }
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await Provider.GetAuthenticationStateAsync();
+        var test = (state?.User?.Identity?.Name ?? "Sorry");
+
+        //base.OnInitializedAsync();
+    }
     public void registration()
     {
         string? messageError = "";
         //string? message = "Опа, ошибка!1";
         /*if (password?.Length < 6)
-            messageError = "Слишком короткий пароль, введите минимум 6 символов";
+        messageError = "Слишком короткий пароль, введите минимум 6 символов";
         if (password?.Length > 15)
-            messageError = "Слишком длинный пароль, введите до 15 символов";
+        messageError = "Слишком длинный пароль, введите до 15 символов";
         if (password != password2)
-            messageError = "Пароли не совпадают";
-        if (password == null || password2 == null)
-            messageError = "Введите пароль";
-        if (login == null)
-            messageError = "Введите логин";
-        if (name == null)
-            messageError = "Введите имя";*/
+        messageError = "Пароли не совпадают";
+    if (password == null || password2 == null)
+        messageError = "Введите пароль";
+    if (login == null)
+        messageError = "Введите логин";
+    if (name == null)
+        messageError = "Введите имя";*/
         if (messageError != "")
         {
             /*var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
@@ -88,24 +98,24 @@
         {
             /*using (var db = new ConnectContext("postgres", "postgres"))
             {
-                var checkLogin = db.users.Where(x => x.login == login).ToList();
-                if (checkLogin.Count > 0)
-                {
-                    messageError = "Такой логин уже существует, введите другой";
-                    var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
-                    NotificationService.Notify(message);
-                    return;
+            var checkLogin = db.users.Where(x => x.login == login).ToList();
+            if (checkLogin.Count > 0)
+            {
+            messageError = "Такой логин уже существует, введите другой";
+            var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+                NotificationService.Notify(message);
+                return;
                 }
                 var newUser = new User
-                    {
-                        name = LoginData.UserName,
-                        login = LoginData.Login,
-                        password = LoginData.Password,
-                        date = DateTime.UtcNow
-                    };
-                db.users.Add(newUser);
-                db.SaveChanges();
-            }*/
+                {
+                name = LoginData.UserName,
+                login = LoginData.Login,
+                password = LoginData.Password,
+                date = DateTime.UtcNow
+        };
+        db.users.Add(newUser);
+        db.SaveChanges();
+    }*/
         }
 
     }
@@ -114,5 +124,36 @@
     void ShowNotification(NotificationMessage message)
     {
         NotificationService.Notify(message);
+    }
+    public async void GetUser()
+    {
+        /*if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
+        {
+            ((TokenAuthenticationStateProvider)Provider).MakeUserAnonymous();
+        }*/
+        var state = await Provider.GetAuthenticationStateAsync();
+
+        var loginExist = state?.User?.Identity?.Name;
+        //if (loginExist == null)
+        if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
+        {
+
+            string messageError = "Не верные логин/пароль или пользователя не существует";
+            var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+            NotificationService.Notify(message);
+        }
+    }
+    public class GetDataUser
+    {
+        List<User> user { get; set; }
+
+        /*public void GetDataUser()
+        {
+            using (var db = new ConnectContext())
+            {
+                user = db?.users?.Where(x => x.login == LoginData.UserName && x.password == LoginData.Password).ToList();
+                var mess = "";
+            }
+        }*/
     }
 }
