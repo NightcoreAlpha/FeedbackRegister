@@ -18,10 +18,6 @@ namespace Handicraft.Data
         public RegistrationViewModel LoginData { get; set; }
         protected async Task LoginAsync()
         {
-            if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
-            {
-                return;
-            }
 
             var token = new SecurityToken
             {
@@ -34,17 +30,22 @@ namespace Handicraft.Data
                 login = LoginData.UserName,
                 password = LoginData.Password
             };
+            var checkLogin = GetDataClass.GetUserData(LoginData.UserName, LoginData.Password);
+            if(checkLogin.Count == 0)
+            {
+                return;
+            }
             await LocalStorageService.SetAsync(nameof(SecurityToken), token);
             navigationManager.NavigateTo("/", true);
         }
     }
     public class RegistrationViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Укажите имя пользователя")]
         public string UserName { get; set; }
         //[Required]
         //public string Login { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Введите пароль")]
         [StringLength(15, ErrorMessage = "Не более 15 символов")]
         public string Password { get; set; }
     }

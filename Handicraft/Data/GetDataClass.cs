@@ -60,17 +60,47 @@ namespace Handicraft.Data
             return claimsList;
         }
 
+        public static List<User> GetUserData(string login)
+        {
+            List<User> user = new List<User>();
+            using (var db = new ConnectContext("", ""))
+            {
+                user = db?.users?.Where(x => x.login == login).ToList();
+                var mess = "";
+            }
+            return user;
+
+        }
         public static List<User> GetUserData(string login, string password)
         {
             List<User> user = new List<User>();
-            using (var db = new ConnectContext("",""))
+            using (var db = new ConnectContext("", ""))
             {
                 user = db?.users?.Where(x => x.login == login && x.password == password).ToList();
                 var mess = "";
             }
             return user;
         }
-
+        public static List<User> GetUserData(Guid id)
+        {
+            List<User> user = new List<User>();
+            using (var db = new ConnectContext("", ""))
+            {
+                user = db?.users?.Where(x => x.id == id).ToList();
+                var mess = "";
+            }
+            return user;
+        }
+        //public static List<ConnectDB.Type> GetType()
+        //{
+        //    List<ConnectDB.Type> types = new List<ConnectDB.Type>();
+        //    using (var db = new ConnectContext("", ""))
+        //    {
+        //        types = db?.types?.ToList();
+        //        var mess = "";
+        //    }
+        //    return types;
+        //}
         /*public List<Employee>? employee = new List<Employee>();
         public List<Role>? role = new List<Role>();
         public List<Customer>? customers = new List<Customer>();

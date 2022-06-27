@@ -4,29 +4,38 @@
 @using static Handicraft.Data.ConnectDB;
 @using static Handicraft.Data.RegistrationModel;
 @using static Handicraft.Pages.Registration;
-
+@inject NavigationManager navigationManager
 @inject AuthenticationStateProvider Provider
-
+@inject IJSRuntime JSRuntime
 
 <div class="left-container">
 
     <div class="navbar-top" style="">
 
         <RadzenDataGrid AllowFiltering="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10" class="@destroyLogic"
-                        AllowSorting="false" TItem="ConnectDB.Type" Data="@types" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="100px" @bind-Value=@typesic
-                        href=@productIcon>
+                        AllowSorting="false" TItem="ConnectDB.Type" Data="@types" SelectionMode="DataGridSelectionMode.Single" ColumnWidth="100px" @bind-Value=@typesic>
             <Columns>
                 <RadzenDataGridColumn TItem="ConnectDB.Type" Property="id" Title="ID" Visible="false"></RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ConnectDB.Type" Property="name" Title="Выберите категорию" Width="150px">
                     <HeaderTemplate>
                         <div>
                             <a href="/">Выберите категорию</a>
-                            <button class="oi oi-plus nav-button" onclick=@renderLogicFunction></button>
+                            @if (userIsAdmin == true)
+                            {
+                                <button class="oi oi-plus nav-button" onclick=@renderLogicFunction></button>
+                            }
                         </div>
+
                     </HeaderTemplate>
                     <Template Context="typ">
+                        @if (typesic[0].name == typ.name && userIsAdmin == true)
+                        {
+                            <div>
+                                <button class="oi oi-plus nav-button" onclick=@addProductPage></button>
+                            </div>
+                        }
                         @typ.name
-                        @if (typesic[0].name == typ.name)
+                        @if (typesic[0].name == typ.name && userIsAdmin == true)
                         {
                             <div>
                                 <button class="oi oi-minus nav-button" onclick=@deleteTypeClick></button>
@@ -44,6 +53,8 @@
         </div>
     </div>
 </div>
+<NavLink href="testjs">
+</NavLink>
 @if (typesic.Count > 0)
 {
     <ProductIcon TypeProduct=@typesic[0]>
@@ -51,7 +62,8 @@
 }
 @code {
     List<User> user { get; set; }
-    ProductIcon productIcon;
+    bool? userIsAdmin = false;
+
     string destroyLogic = "renderLogic";
     string addTypeLogic = "add-type-destroy";
     string typeName = "";
@@ -61,16 +73,10 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        ShowAlert();
         uploadData();
-        //user =  ;
+        getUserData();
     }
-    /*protected override async Task OnInitializedAsync()
-        {
-        var state = await Provider.GetAuthenticationStateAsync();
-        userData.Add(state?.User?.Identity?.Name ?? "Sorry");
-
-        //base.OnInitializedAsync();
-    }*/
     public void uploadData()
     {
         types = GetDataClass.getTypes();
@@ -101,7 +107,7 @@
                 };
             if (newType != null)
             {
-                using (var db = new ConnectContext("",""))
+                using (var db = new ConnectContext("", ""))
                 {
                     db.types?.Add(newType);
                     db.SaveChanges();
@@ -117,19 +123,44 @@
         Guid idType = typesic[0].id;
         if (idType != Guid.Empty)
         {
-            using (var db = new ConnectContext("",""))
+            using (var db = new ConnectContext("", ""))
             {
+                var product = db.products.Where(x => x.type.id == idType).ToList();
+                if (product.Count > 0) return;
+
                 var type = db.types.Where(x => x.id == idType).ToList();
-                if (type.Count > 0) return;
-                db.Remove(type[0]);
-                db.SaveChanges();
-                uploadData();
+                if (type.Count > 0)
+                {
+                    db.Remove(type[0]);
+                    db.SaveChanges();
+                    uploadData();
+                }
             }
         }
     }
     public void cancelTypeClick()
     {
-
         renderLogicFunction();
+    }
+    public async void getUserData()
+    {
+        var state = await Provider.GetAuthenticationStateAsync();
+        user = GetDataClass.GetUserData(state?.User?.Identity?.Name);
+        if (user.Count > 0)
+        {
+            userIsAdmin = user[0].admin_right;
+            StateHasChanged();
+        }
+
+    }
+    public void addProductPage()
+    {
+        navigationManager.NavigateTo("/AddProductPage");
+        //+ newUser.id.ToString(), true);
+
+    }
+    async Task ShowAlert()
+    {
+        //await JSRuntime.InvokeVoidAsync("createAlert");
     }
 }

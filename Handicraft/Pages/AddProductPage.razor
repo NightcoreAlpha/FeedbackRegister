@@ -1,0 +1,115 @@
+﻿@page "/addproductpage"
+@using Handicraft.Data
+@using static Handicraft.Data.GetDataClass;
+@using static Handicraft.Data.ConnectDB;
+@using static Handicraft.Pages.Product;
+@inject NavigationManager navigationManager
+
+
+<div class="central-container">
+    <div class="add-product-page">
+        <div class="photo-product">
+        </div>
+
+        <div class="left-product-fields">
+            <h5 class="mb-2">Наименование</h5>
+            <RadzenTextBox Placeholder="" @bind-Value=@nameProduct />
+            <h5 class="mb-2 mt-2">Цвет</h5>
+            <RadzenTextBox Placeholder="" @bind-Value=@color />
+            <h5 class="mb-2 mt-2">Материал</h5>
+            <RadzenTextBox Placeholder="" @bind-Value=@material />
+            <h5 class="mb-2 mt-2">Тип</h5>
+            <RadzenDropDown AllowClear="true" TValue="string" SelectedItem="@selectType"
+                            Data=@(types.Select(x=>x.name))
+                            Change=@(args => OnChange(args, "DropDown")) @bind-Value=@type />
+            <h5 class="mb-2 mt-2">В наличии</h5>
+            <RadzenCheckBox TValue="bool?" @bind-Value=@stack />
+        </div>
+
+        <div class="right-field">
+            <h5 class="mb-2 mt-2">Описание</h5>
+            <RadzenTextArea class="comment-field" @bind-Value=@comment />
+            <h5 class="mb-2 mt-2">Цена</h5>
+            <RadzenTextBox Placeholder="" @bind-Value=@price />
+            <div class="button-product">
+                <RadzenButton class="blue-button mt-auto" Text="Добавить" Click="@addProduct" />
+                <RadzenButton class="blue-button mt-auto" Text="Отмена" Click="@goToMain" />
+            </div>
+
+        </div>
+
+        @*        <RadzenCheckBox Placeholder="" />
+        *@
+        @*        <span class="name">@product[0].name</span>
+        <span class="price">@product[0].price</span>
+        <span class="color">@product[0].color</span>
+        <span class="material">@product[0].material</span>
+        <span class="type-name">@product[0].type?.name</span>
+        <span class="stock">@product[0].stock</span>
+        <span class="comments">@product[0].comments</span>
+        *@
+    </div>
+</div>
+@code {
+    IList<ConnectDB.Type> types = new List<ConnectDB.Type>();
+    public string? nameProduct = "";
+    public string? color = "";
+    public string? material = "";
+    public string? type = "";
+    //public string? type = new ConnectDB.Type();
+    public bool? stack = true;
+    public string? comment = "";
+    public string? price = "";
+    List<ConnectDB.Type> selectType;
+
+    protected override void OnInitialized()
+    {
+        //        selectedEmployees = employee.Take(1).ToList();*/
+
+        //Guid idproduct = new Guid(id);
+        base.OnInitialized();
+        types = Data.GetDataClass.getTypes().ToList();
+    }
+    void OnChange(object value, string name)
+    {
+        var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+        selectType = types.Where(x => x.name == value).ToList();
+        var mess = "";
+    }
+    public void addProduct()
+    {
+        using (var db = new ConnectContext("", ""))
+        {
+            db.types.Attach(selectType[0]);
+            var product = new ConnectDB.Product
+                {
+                    id = Guid.NewGuid(),
+                    name = nameProduct,
+                    color = this.color,
+                    material = this.material,
+                    type = selectType[0],
+                    stock = this.stack,
+                    price = Convert.ToInt32(this.price)
+
+                };
+            db.Add(product);
+            db.SaveChanges();
+            navigationManager.NavigateTo("/");
+
+        }
+
+    }
+    public void goToMain()
+    {
+        navigationManager.NavigateTo("/");
+
+    }
+    public void onSelectType()
+    {
+        //selectType =
+        //selectedEmployees = employee.Take(1).ToList();*/
+
+    }
+    [Parameter]
+    public string id { get; set; }
+}

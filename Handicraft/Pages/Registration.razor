@@ -6,6 +6,7 @@
 @inject NotificationService NotificationService
 @inherits Data.RegistrationModel
 @inject AuthenticationStateProvider Provider
+@inject NavigationManager navigationManager
 
 
 @*<div class="col-lg-6 col-xl-4 p-3">
@@ -22,30 +23,27 @@
         <button class="invisible-wall"></button>
     </div>
     <EditForm Model="@LoginData" OnValidSubmit="LoginAsync">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
         <RadzenCard class="reg-field">
             <h4 class="mb-4">Регистрация пользователя</h4>
-            <h5 class="mb-2">Имя</h5>
-            <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
-            @*            <h5 class="mb-2 mt-2">Логин</h5>
-            <RadzenTextBox Placeholder="" @bind-Value=LoginData.UserName />
-            *@            <h5 class="mb-2 mt-2">Пароль</h5>
-            <RadzenPassword Placeholder="" @bind-Value=LoginData.Password />
-            @*            <h5 class="mb-2 mt-2">Подтверждение пароля</h5>
+            <h5 class="mb-2">Логин</h5>
+            <RadzenTextBox Placeholder="" @bind-Value=@login />
+            <h5 class="mb-2 mt-2">Пароль</h5>
+            <RadzenPassword Placeholder="" @bind-Value=@password />
+            <h5 class="mb-2 mt-2">Подтверждение пароля</h5>
             <RadzenPassword Placeholder="" @bind-Value=@password2 />
-            *@            @*<h5 class="mb-2 mt-2">Email адресс</h5>
-            <RadzenTextBox Placeholder="" Value="@email"/>
-            <h5 class="mb-2 mt-2">Телефон</h5>
-            <RadzenTextBox Placeholder="" Value="@telefon"/>
-            <h5 class="mb-2 mt-2">Контакты для связи с вами</h5>
-            <RadzenTextArea Placeholder="" class="textarea-height" Value="@contacts"/>*@
-            <RadzenButton class="oi oi- blue-button reg-button" Text="Зарегистрироваться" Click="@registration" />
-            <p class="my-4">
-                <button type="submit" class="btn btn-primary" onclick=@GetUser>Log in</button>
+@*            <RadzenButton class="oi oi- blue-button reg-button" Text="Зарегистрироваться" Click="@registration" />
+*@                        <p class="my-4">
+@*                <RadzenButton class="oi oi- blue-button reg-button" Click=@registration>Зарегистрироваться</RadzenButton>
+*@                                <button class="btn btn-primary" onclick=@registration>Зарегистрироваться</button>
+
             </p>
+            @*            <p class="my-4">
+            <button type="submit" class="btn btn-primary" onclick=@GetUser>Log in</button>
+            </p>*@
             <RadzenNotification />
         </RadzenCard>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
     </EditForm>
 </div>
 
@@ -66,56 +64,65 @@
         base.OnInitialized();
         //product = Data.GetDataClass.getProduct(idproduct);
     }
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await Provider.GetAuthenticationStateAsync();
-        var test = (state?.User?.Identity?.Name ?? "Sorry");
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var state = await Provider.GetAuthenticationStateAsync();
+    //    var test = (state?.User?.Identity?.Name ?? "Sorry");
 
-        //base.OnInitializedAsync();
-    }
+    //    //base.OnInitializedAsync();
+    //}
     public void registration()
     {
         string? messageError = "";
         //string? message = "Опа, ошибка!1";
-        /*if (password?.Length < 6)
-        messageError = "Слишком короткий пароль, введите минимум 6 символов";
+        if (password?.Length < 6)
+            messageError = "Слишком короткий пароль, введите минимум 6 символов";
         if (password?.Length > 15)
-        messageError = "Слишком длинный пароль, введите до 15 символов";
+            messageError = "Слишком длинный пароль, введите до 15 символов";
         if (password != password2)
-        messageError = "Пароли не совпадают";
-    if (password == null || password2 == null)
-        messageError = "Введите пароль";
-    if (login == null)
-        messageError = "Введите логин";
-    if (name == null)
-        messageError = "Введите имя";*/
+            messageError = "Пароли не совпадают";
+        if (password == null || password2 == null)
+            messageError = "Введите пароль";
+        if (login == null)
+            messageError = "Введите логин";
+        //if (name == null)
+        //    messageError = "Введите имя";
         if (messageError != "")
         {
-            /*var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
-            NotificationService.Notify(message);*/
+            var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+            NotificationService.Notify(message);
         }
         else
         {
-            /*using (var db = new ConnectContext("postgres", "postgres"))
+            using (var db = new ConnectContext("postgres", "postgres"))
             {
-            var checkLogin = db.users.Where(x => x.login == login).ToList();
-            if (checkLogin.Count > 0)
-            {
-            messageError = "Такой логин уже существует, введите другой";
-            var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
-                NotificationService.Notify(message);
-                return;
-                }
-                var newUser = new User
+                try
                 {
-                name = LoginData.UserName,
-                login = LoginData.Login,
-                password = LoginData.Password,
-                date = DateTime.UtcNow
-        };
-        db.users.Add(newUser);
-        db.SaveChanges();
-    }*/
+                    LoginData.UserName = login;
+                    LoginData.Password = password;
+                    var checkLogin = db.users.Where(x => x.login == login).ToList();
+                    if (checkLogin.Count > 0)
+                    {
+                        messageError = "Такой логин уже существует, введите другой";
+                        var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+                        NotificationService.Notify(message);
+                        return;
+                    }
+                    var newUser = new User
+                        {
+                            id = Guid.NewGuid(),
+                            login = this.login,
+                            password = this.password,
+                            date = DateTime.UtcNow
+                        };
+                    db.users.Add(newUser);
+                    db.SaveChanges();
+                    navigationManager.NavigateTo("/mycabinet/" + newUser.id.ToString(), true);
+
+                }
+                catch (Exception ex) { }
+            }
+
         }
 
     }
@@ -135,7 +142,7 @@
 
         var loginExist = state?.User?.Identity?.Name;
         //if (loginExist == null)
-        if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
+        if (GetDataClass.GetUserData(LoginData.UserName).Count < 1)
         {
 
             string messageError = "Не верные логин/пароль или пользователя не существует";

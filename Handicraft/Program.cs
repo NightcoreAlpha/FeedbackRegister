@@ -20,6 +20,7 @@ builder.Services.AddScoped<GetDataClass>();
 builder.Services.AddScoped<AddComment>();
 builder.Services.AddScoped<Product>();
 builder.Services.AddScoped<Radzen.NotificationService>();
+builder.Services.AddScoped<AddProductPage>();
 //
 builder.Services.AddOptions();
 builder.Services.AddAuthenticationCore();

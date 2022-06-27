@@ -1,6 +1,7 @@
 ﻿@using static Handicraft.Data.GetDataClass;
 @using static Handicraft.Data.ConnectDB;
-@inject NavigationManager NavigationManager
+@inject NavigationManager NavigationManager;
+@inject AuthenticationStateProvider Provider
 
 <div class="product-container">
     @if (TypeProduct != null)
@@ -8,9 +9,25 @@
         @foreach (var prod in products)
         {
             <div class="product-field">
-                <span class="name"><a class="product-link" href="product/@prod.id">@prod.name</a></span>
-                <span class="price">@prod.price</span>
-                <button class="button">Заказать</button>
+                <NavLink class="name"><a class="product-link" @ref=MyElementReference href="product/@prod.id">@prod.name</a></NavLink>
+                @if (prod.id == new Guid("9fde9a32-2594-4429-ba8c-a98437a459bd"))
+                {
+                    <img src="/images/scorp.jpg" class="img-product" style="" />
+                }
+                @if (prod.id == new Guid("9fde9a32-2594-4429-ba8c-a98437a459bc"))
+                {
+                    <img src="/images/shark.jpg" class="img-product" style="" />
+                }
+                @if (prod.id == new Guid("9fde9a32-2594-4429-ba8c-a98437a459bb"))
+                {
+                    <img src="/images/fallout.jpg" class="img-product" style="" />
+                }
+                <span class="price">Стоимость: @prod.price лей</span>
+                <RadzenButton class="button blue-button order-button">Заказать</RadzenButton>
+                @if (userIsAdmin == true)
+                {
+                    <RadzenButton class="blue-button delete-button" href="@deleteButton" Click="@deleteProduct">Удалить товар</RadzenButton>
+                }
 
             </div>
         }
@@ -18,15 +35,20 @@
 
 </div>
 @code {
+    ElementReference ReferenceToInputControl;
     List<Product>? products = new List<Product>();
+    RadzenButton deleteButton;
+    NavLink navElement;
+    ElementReference MyElementReference;
+    List<User> user { get; set; }
+    bool? userIsAdmin = false;
+
     [Parameter]
     public Data.ConnectDB.Type? TypeProduct { get; set; }
-    NavLink navlink;
-
     public void productLink()
     {
         /*if (products[0] != null)
-        {
+            {
             var test = navlink;
             NavigationManager.NavigateTo("product/"+products[0].id.ToString());
         }*/
@@ -34,6 +56,8 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        getUserData();
+
     }
     protected override void OnParametersSet()
     {
@@ -47,5 +71,24 @@
         {
             products = getProductsType(TypeProduct);
         }
+    }
+    public void deleteProduct()
+    {
+        using (var db = new ConnectContext("", ""))
+        {
+            var mess = "";
+            string test = System.Text.Json.JsonSerializer.Serialize(MyElementReference.Id);
+        }
+    }
+    public async void getUserData()
+    {
+        var state = await Provider.GetAuthenticationStateAsync();
+        user = GetUserData(state?.User?.Identity?.Name);
+        if (user.Count > 0)
+        {
+            userIsAdmin = user[0].admin_right;
+            StateHasChanged();
+        }
+
     }
 }

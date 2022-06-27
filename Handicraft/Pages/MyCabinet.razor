@@ -1,7 +1,8 @@
-﻿@page "/mycabinet"
+﻿@page "/mycabinet/{id}"
 @using static Handicraft.Data.GetDataClass;
 @using static Handicraft.Data.ConnectDB;
 @inject NotificationService NotificationService
+@inject NavigationManager navigationManager
 
 <div class="central-container">
     <div>
@@ -13,18 +14,18 @@
         <h5 class="mb-2">Имя</h5>
         <RadzenTextBox Placeholder="" @bind-Value=@name />
         <h5 class="mb-2 mt-2">Логин</h5>
-        <RadzenTextBox Placeholder="" @bind-Value=@login />
+        <RadzenTextBox Placeholder="" ReadOnly="true" @bind-Value=@login />
         <h5 class="mb-2 mt-2">Пароль</h5>
         <RadzenPassword Placeholder="" @bind-Value=@password />
         <h5 class="mb-2 mt-2">Подтверждение пароля</h5>
         <RadzenPassword Placeholder="" @bind-Value=@password2 />
         <h5 class="mb-2 mt-2">Email адресс</h5>
-        <RadzenTextBox Placeholder="" Value="@email"/>
+        <RadzenTextBox Placeholder="" @bind-Value=@email />
         <h5 class="mb-2 mt-2">Телефон</h5>
-        <RadzenTextBox Placeholder="" Value="@telefon"/>
+        <RadzenTextBox Placeholder="" @bind-Value=@telefon />
         <h5 class="mb-2 mt-2">Контакты для связи с вами</h5>
-        <RadzenTextArea Placeholder="" class="textarea-height" Value="@contacts"/>
-        <RadzenButton class="oi oi- blue-button reg-button" Text="Сохранить" Click="@registration" />
+        <RadzenTextArea Placeholder="" class="textarea-height" @bind-Value=@contacts />
+        <RadzenButton class="oi oi- blue-button reg-button" Text="Сохранить" Click="@updateUser" />
         <RadzenNotification />
     </RadzenCard>
 </div>
@@ -43,9 +44,10 @@
     {
         //Guid idproduct = new Guid(id);
         base.OnInitialized();
+        getUserValue();
         //product = Data.GetDataClass.getProduct(idproduct);
     }
-    public void registration()
+    public async void updateUser()
     {
         string? messageError = "";
         //string? message = "Опа, ошибка!1";
@@ -70,23 +72,55 @@
         {
             using (var db = new ConnectContext("postgres", "postgres"))
             {
-                var checkLogin = db.users.Where(x => x.login == login).ToList();
-                if (checkLogin.Count > 0)
+                var checkUser = db.users.Where(x => x.login == login).ToList();
+                if (checkUser.Count > 0)
+                //{
+                //    messageError = "Такой логин уже существует, введите другой";
+                //    var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
+                //    NotificationService.Notify(message);
+                //    return;
+                //}
+                //var newUser = new User
+                //    {
+                //        name = this.name,
+                //        login = this.login,
+                //        password = this.password,
+                //        email = this.email,
+                //        telefon = this.contacts,
+                //        date = DateTime.UtcNow
+                //    };
+                //db.users.Add(newUser);
                 {
-                    messageError = "Такой логин уже существует, введите другой";
-                    var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
-                    NotificationService.Notify(message);
-                    return;
+                    checkUser[0].name = this.name;
+                    checkUser[0].login = this.login;
+                    checkUser[0].password = this.password;
+                    checkUser[0].email = this.email;
+                    checkUser[0].telefon = this.telefon;
+                    checkUser[0].contacts = this.contacts;
+                    checkUser[0].date = DateTime.UtcNow;
+                    id = checkUser[0].id.ToString();
+                    db.SaveChanges();
+                    navigationManager.NavigateTo("/mycabinet/" + checkUser[0].id.ToString(), true);
                 }
-                var newUser = new User
-                    {
-                        name = this.name,
-                        login = this.login,
-                        password = this.password,
-                        date = DateTime.UtcNow
-                    };
-                db.users.Add(newUser);
-                db.SaveChanges();
+            }
+        }
+
+    }
+    public async void  getUserValue()
+    {
+        //string userLogin = state?.User?.Identity?.Name;
+
+        using (var db = new ConnectContext("", ""))
+        {
+            var getUser = Data.GetDataClass.GetUserData(new Guid(id));
+            if (getUser.Count > 0)
+            {
+                name = getUser[0].name;
+                login = getUser[0].login;
+                password = getUser[0].password;
+                email = getUser[0].email;
+                telefon = getUser[0].telefon;
+                contacts = getUser[0].contacts;
             }
         }
 
@@ -97,4 +131,7 @@
     {
         NotificationService.Notify(message);
     }
+    [Parameter]
+    public string? id { get; set; }
+
 }

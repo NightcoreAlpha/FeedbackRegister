@@ -216,19 +216,27 @@ a, .btn-link {
 }
 
 .cart-button {
-    width: 200px !important;
-    height: 50px !important;
+    width: 180px !important;
+    height: 40px !important;
     grid-column: 3;
     grid-row: 4;
+    vertical-align: baseline !important;
+}
+.cart-button span{
+    vertical-align: baseline !important;
 }
 
 .favourites-button {
-    width: 200px !important;
-    height: 50px !important;
+    width: 180px !important;
+    height: 40px !important;
     grid-column: 2;
     grid-row: 4;
     justify-self: end;
     margin-right: 10px;
+    vertical-align: baseline !important;
+}
+.favourites-button span {
+    vertical-align: baseline !important;
 }
 
 .invisible-wall {
@@ -250,6 +258,7 @@ a, .btn-link {
     box-sizing: unset !important;
     height: 100px !important;
 }
+
 .reg-button {
     width: 300px !important;
     height: 50px !important;
@@ -259,10 +268,77 @@ a, .btn-link {
     margin-bottom: 10px !important;
     padding: 0px !important;
 }
+
 .invisible-wall {
     width: 250px;
     visibility: hidden;
 }
+
 .left-container {
     margin-right: auto;
+}
+
+.product-page {
+    background-color: rgb(255 255 255);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 16%);
+    height: 400px;
+    width: 100%;
+    padding: 12px 10px;
+    margin-right: auto;
+    margin-left: auto;
+    display: grid;
+    grid-template-columns: 400px minmax(0,1fr) 220px;
+    grid-template-rows: 80px 1fr 50px 100px;
+    grid-auto-flow: column;
+}
+
+.add-product-page {
+    background-color: rgb(255 255 255);
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 16%);
+    height: 400px;
+    width: 100%;
+    padding: 12px 10px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+}
+
+.left-product-fields {
+    margin: 10px 20px 0px 0px;
+}
+
+.comment-field {
+    margin-right: 20px;
+    width: 300px;
+    height: 107px !important;
+}
+
+.photo-product {
+    width: 400px;
+}
+
+.right-field {
+    padding: 0px;
+    width: 300px;
+    height: 400px;
+}
+
+.button-product {
+    padding: 0px;
+    /*    margin: auto 0px 10px 0px;*/
+    margin:10px 0px 0px 0px;
+}
+.delete-button {
+    width: 180px;
+    grid-column: 3;
+    grid-row: 3;
+    justify-self: center;
+}
+.order-button {
+    width: 180px;
+    grid-column: 2;
+    grid-row: 3;
+    justify-self:end;
 }

@@ -14,15 +14,19 @@
     margin-right: auto;
     max-width: 1180px;
     display: flex;
-    padding: 0px
+    padding: 0px;
+    color: rgb(255 255 255) !important;
 }
 
 .li-item {
     font-family: PT Sans,Helvetica,Arial,sans-serif;
     font-size: 14px;
-    color: rgb(255 255 255);
+    color: rgb(255 255 255) !important;
     line-height: 32px;
     display: flex;
+
+}.li-item a{
+    color: rgb(255 255 255) !important;
 }
 
     .li-item:not(:first-child) {

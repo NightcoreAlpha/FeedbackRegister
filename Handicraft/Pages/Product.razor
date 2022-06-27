@@ -8,12 +8,24 @@
     <div class="product-page">
 
         <span class="name">@product[0].name</span>
-        <span class="price">@product[0].price</span>
-        <span class="color">@product[0].color</span>
-        <span class="material">@product[0].material</span>
-        <span class="type-name">@product[0].type?.name</span>
-        <span class="stock">@product[0].stock</span>
-        <span class="comments">@product[0].comments</span>
+        <span class="price">Стоимость: @product[0].price лей</span>
+        <span class="color">Цвет: @product[0].color</span>
+        <span class="material">Материал: @product[0].material</span>
+        <span class="type-name">Тип: @product[0].type?.name</span>
+        <span class="stock">В наличии: @product[0].stock</span>
+        <span class="comments">Описание: @product[0].comments</span>
+        @if(product[0].id == new Guid("9fde9a32-2594-4429-ba8c-a98437a459bd"))
+        {
+            <img src="/images/scorp.jpg" style="width:370px;height:370px;"/>
+        }
+        @if(product[0].id == new Guid("9fde9a32-2594-4429-ba8c-a98437a459bc"))
+        {
+            <img src="/images/shark.jpg" style="width:300px;height:370px;"/>
+        }
+        @if(product[0].id == new Guid("9fde9a32-2594-4429-ba8c-a98437a459bb"))
+        {
+            <img src="/images/fallout.jpg" style="width:300px;height:370px;"/>
+        }
         <RadzenButton class="oi oi-cart blue-button cart-button" Text="В корзину"/>
         <RadzenButton class="oi oi-heart blue-button favourites-button" Text="В избранное"/>
     </div>

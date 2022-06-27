@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Handicraft.Data
@@ -54,6 +55,7 @@ namespace Handicraft.Data
             public string? contacts { get; set; }
             public string? comment { get; set; }
             public string? password { get; set; }
+            public bool? admin_right { get; set; }
         }
         public class Type
         {

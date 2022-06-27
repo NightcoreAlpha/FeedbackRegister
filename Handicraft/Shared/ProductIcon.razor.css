@@ -6,8 +6,8 @@
     padding: 12px 10px;
     margin: 0px 0px 10px 20px;
     display: grid;
-    grid-template-columns: 550px minmax(0,1fr) 130px;
-    grid-template-rows: 1fr 50px 70px;
+    grid-template-columns: 185px auto 250px;
+    grid-template-rows:  70px 50px;
 }
 
 .product-container {
@@ -16,9 +16,9 @@
 
 .price {
     margin-left: 10px;
-    padding: 10px 20px;
-    font-size: 20px;
-    font-weight: 500;
+    padding: 10px 0px;
+    font-size: 18px;
+    font-weight: 600;
     grid-column: 3;
     grid-row: 1;
 }
@@ -31,7 +31,7 @@
 
 .button {
     width: 100px;
-    height: 50px;
+    height: 40px;
     grid-column: 3;
     grid-row: 3;
 }
@@ -52,3 +52,10 @@
         outline: 0;
         text-decoration: none
     }
+
+.img-product {
+    width: 175px;
+    height: 175px;
+    grid-column: 1;
+    grid-row: 1/2;
+}

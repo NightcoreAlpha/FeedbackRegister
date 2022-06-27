@@ -1,4 +1,7 @@
-﻿@inject AuthenticationStateProvider Provider
+﻿@using Handicraft.Data
+@inject AuthenticationStateProvider Provider
+@inherits Data.RegistrationModel
+@using static Handicraft.Data.ConnectDB;
 
 <header>
     <div class="info-line">
@@ -35,19 +38,20 @@
                     <img src="images/cart.svg" style="width:24px;height:24px">
                     <span>Корзина</span>
                 </a>
-                <a class="user-item" href="/registration">
-                    <span class="oi oi-people">Регистрация</span>
-                </a>
                 @if (result == false)
                 {
+                    <a class="user-item" href="/registration">
+                        <span class="oi oi-person">Регистрация</span>
+                    </a>
+
                     <a class="user-item" href="/authorization">
-                        <span class="oi oi-people">Войти</span>
+                        <span class="oi oi-account-login">Войти</span>
                     </a>
                 }
                 else
                 {
-                    <a class="user-item" href="/logout">
-                        <span class="oi oi-people">@userName</span>
+                    <a class="user-item" style="margin-left:0px;" href="/mycabinet/{@idUser}">
+                        <span class="oi oi-person"style="padding:0px;">@userName</span>
                     </a>
                     <Handicraft.Pages.Logout />
                 }
@@ -58,10 +62,10 @@
 @code {
     bool result = false;
     string userName = "";
+    string? idUser;
+
     protected override void OnInitialized()
     {
-        //Guid idproduct = new Guid(id);
-
         base.OnInitialized();
         GetUser();
         //product = Data.GetDataClass.getProduct(idproduct);
@@ -69,16 +73,23 @@
     public async void GetUser()
     {
         var state = await Provider.GetAuthenticationStateAsync();
-        var loginExist = state?.User?.Identity?.Name;
-        if (loginExist == null)
+        var usr = GetDataClass.GetUserData(state?.User?.Identity?.Name);
+        if (usr.Count > 0)
         {
-            result = false;
-        }
-        else
-        {
-            result = true;
-            userName = state?.User?.Identity?.Name;
-            StateHasChanged();
+
+            idUser = (usr[0].id != Guid.Empty) ? usr[0].id.ToString() : "";
+
+            var loginExist = state?.User?.Identity?.Name;
+            if (loginExist == null)
+            {
+                result = false;
+            }
+            else
+            {
+                result = true;
+                userName = state?.User?.Identity?.Name;
+                StateHasChanged();
+            }
         }
     }
 }

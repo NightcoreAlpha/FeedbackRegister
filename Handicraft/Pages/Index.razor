@@ -1,6 +1,6 @@
 ﻿@page "/"
-@inject AuthenticationStateProvider Provider
-
+@*@inject AuthenticationStateProvider Provider
+*@
 <div class="central-container">
         <NavMenu />
 
@@ -24,15 +24,15 @@
 }*@
 
 @code {
-    [Inject] private AuthenticationStateProvider provider { get; set; }
-    private string userName = "Anonymous";
+    //[Inject] private AuthenticationStateProvider provider { get; set; }
+    //private string userName = "Anonymous";
 
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await Provider.GetAuthenticationStateAsync();
-        userName = state?.User?.Identity?.Name ?? "Sorry";
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    //var state = await Provider.GetAuthenticationStateAsync();
+    //    //userName = state?.User?.Identity?.Name ?? "Sorry";
 
-        //base.OnInitializedAsync();
-    }
+    //    //base.OnInitializedAsync();
+    //}
 }
 
