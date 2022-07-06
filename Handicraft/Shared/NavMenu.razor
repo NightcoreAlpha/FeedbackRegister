@@ -25,7 +25,6 @@
                                 <button class="oi oi-plus nav-button" onclick=@renderLogicFunction></button>
                             }
                         </div>
-
                     </HeaderTemplate>
                     <Template Context="typ">
                         @if (typesic[0].name == typ.name && userIsAdmin == true)
@@ -45,7 +44,6 @@
                 </RadzenDataGridColumn>
             </Columns>
         </RadzenDataGrid>
-
         <div class="@addTypeLogic">
             <input class="input-type-field" type="text" @bind=@typeName />
             <button class="add-buttons" onclick="@addTypeClick">Добавить</button>
@@ -81,7 +79,6 @@
     {
         types = GetDataClass.getTypes();
         typesic = types.Take(1).ToList();
-
     }
     public void renderLogicFunction()
     {
@@ -112,7 +109,6 @@
                     db.types?.Add(newType);
                     db.SaveChanges();
                     uploadData();
-
                     renderLogicFunction();
                 }
             }
@@ -151,13 +147,10 @@
             userIsAdmin = user[0].admin_right;
             StateHasChanged();
         }
-
     }
     public void addProductPage()
     {
         navigationManager.NavigateTo("/AddProductPage");
-        //+ newUser.id.ToString(), true);
-
     }
     async Task ShowAlert()
     {

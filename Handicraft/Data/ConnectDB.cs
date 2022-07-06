@@ -33,6 +33,9 @@ namespace Handicraft.Data
                 //Login = login; Password = password;
                 Login = "postgres";
                 Password = "postgres";
+                /*var test = Convert.FromBase64String(login);
+                var test2 = BitConverter.ToString(test);
+                var mess = "";*/
 
             }
             protected override void OnConfiguring(DbContextOptionsBuilder optionsbuilder)

@@ -38,14 +38,10 @@
     public string? telefon { get; set; }
     public string? contacts { get; set; }
 
-    //List<Data.ConnectDB.Product> product = new List<Data.ConnectDB.Product>();
-
     protected override void OnInitialized()
     {
-        //Guid idproduct = new Guid(id);
         base.OnInitialized();
         getUserValue();
-        //product = Data.GetDataClass.getProduct(idproduct);
     }
     public async void updateUser()
     {
@@ -106,7 +102,7 @@
         }
 
     }
-    public async void  getUserValue()
+    public async void getUserValue()
     {
         //string userLogin = state?.User?.Identity?.Name;
 
@@ -125,8 +121,6 @@
         }
 
     }
-    //[Parameter]
-    //public string id { get; set; }
     void ShowNotification(NotificationMessage message)
     {
         NotificationService.Notify(message);

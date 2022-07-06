@@ -28,11 +28,9 @@
                 {
                     <RadzenButton class="blue-button delete-button" href="@deleteButton" Click="@deleteProduct">Удалить товар</RadzenButton>
                 }
-
             </div>
         }
     }
-
 </div>
 @code {
     ElementReference ReferenceToInputControl;
@@ -42,7 +40,6 @@
     ElementReference MyElementReference;
     List<User> user { get; set; }
     bool? userIsAdmin = false;
-
     [Parameter]
     public Data.ConnectDB.Type? TypeProduct { get; set; }
     public void productLink()
@@ -57,7 +54,6 @@
     {
         base.OnInitialized();
         getUserData();
-
     }
     protected override void OnParametersSet()
     {
@@ -89,6 +85,5 @@
             userIsAdmin = user[0].admin_right;
             StateHasChanged();
         }
-
     }
 }

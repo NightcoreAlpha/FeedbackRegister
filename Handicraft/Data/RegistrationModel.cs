@@ -43,8 +43,6 @@ namespace Handicraft.Data
     {
         [Required(ErrorMessage = "Укажите имя пользователя")]
         public string UserName { get; set; }
-        //[Required]
-        //public string Login { get; set; }
         [Required(ErrorMessage = "Введите пароль")]
         [StringLength(15, ErrorMessage = "Не более 15 символов")]
         public string Password { get; set; }
@@ -52,7 +50,6 @@ namespace Handicraft.Data
     public class SecurityToken
     {
         public string UserName { get; set; }
-        //public string Login { get; set; }
         public string AccessToken { get; set; }
         public DateTime ExpiredAt { get; set; }
     }

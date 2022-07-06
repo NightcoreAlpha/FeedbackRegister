@@ -26,20 +26,12 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
     </EditForm>
-    @*        <RadzenButton class="oi oi-cart blue-button cart-button" Text="В корзину" />
-    <RadzenButton class="oi oi-heart blue-button favourites-button" Text="В избранное" />
-    *@
 </div>
 
 @code {
-
-    //List<Data.ConnectDB.Product> product = new List<Data.ConnectDB.Product>();
-
     protected override void OnInitialized()
     {
-        //Guid idproduct = new Guid(id);
         base.OnInitialized();
-        //product = Data.GetDataClass.getProduct(idproduct);
     }
     void ShowNotification(NotificationMessage message)
     {
@@ -51,13 +43,10 @@
         var loginExist = state?.User?.Identity?.Name;
         if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
         {
-
             string messageError = "Не верный логин/пароль или пользователя не существует";
             var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
             NotificationService.Notify(message);
             navigationManager.NavigateTo("/authorization");
         }
     }
-    //[Parameter]
-    //public string id { get; set; }
 }

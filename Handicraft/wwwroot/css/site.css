@@ -222,9 +222,10 @@ a, .btn-link {
     grid-row: 4;
     vertical-align: baseline !important;
 }
-.cart-button span{
-    vertical-align: baseline !important;
-}
+
+    .cart-button span {
+        vertical-align: baseline !important;
+    }
 
 .favourites-button {
     width: 180px !important;
@@ -235,9 +236,10 @@ a, .btn-link {
     margin-right: 10px;
     vertical-align: baseline !important;
 }
-.favourites-button span {
-    vertical-align: baseline !important;
-}
+
+    .favourites-button span {
+        vertical-align: baseline !important;
+    }
 
 .invisible-wall {
     width: 250px;
@@ -328,17 +330,36 @@ a, .btn-link {
 .button-product {
     padding: 0px;
     /*    margin: auto 0px 10px 0px;*/
-    margin:10px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
 }
+
 .delete-button {
     width: 180px;
     grid-column: 3;
     grid-row: 3;
     justify-self: center;
 }
+
 .order-button {
     width: 180px;
     grid-column: 2;
     grid-row: 3;
-    justify-self:end;
+    justify-self: end;
+}
+
+@media (max-width:639px) {
+    .info-line, .panel-search, .user-elements {
+        display: none;
+    }
+
+    .general-logo, .general-logo-link {
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .central-container{
+        display:contents;
+    }
+    .product-container {
+        margin-top: 20px;
+    }
 }

@@ -24,11 +24,12 @@
     </div>
     <nav class="panel-line">
         <div class="panel-item">
-            <a href="/"><img src="images/logoHC.svg" /></a>
+            <a href="/" class="general-logo-link"><img src="images/logoHC.svg" class="general-logo"/></a>
             <div class="panel-search">
                 <input class="input-place" type="search" placeholder="Поиск по сайту" autocomplete="on">
                 <img src="images/loupe.svg" class="search-icon" />
             </div>
+
             <div class="user-elements">
                 <a class="user-item" href="/">
                     <img src="images/heart.svg" style="width:20px;height:20px">
@@ -51,7 +52,7 @@
                 else
                 {
                     <a class="user-item" style="margin-left:0px;" href="/mycabinet/{@idUser}">
-                        <span class="oi oi-person"style="padding:0px;">@userName</span>
+                        <span class="oi oi-person" style="padding:0px;">@userName</span>
                     </a>
                     <Handicraft.Pages.Logout />
                 }
@@ -63,12 +64,10 @@
     bool result = false;
     string userName = "";
     string? idUser;
-
     protected override void OnInitialized()
     {
         base.OnInitialized();
         GetUser();
-        //product = Data.GetDataClass.getProduct(idproduct);
     }
     public async void GetUser()
     {
@@ -76,9 +75,7 @@
         var usr = GetDataClass.GetUserData(state?.User?.Identity?.Name);
         if (usr.Count > 0)
         {
-
             idUser = (usr[0].id != Guid.Empty) ? usr[0].id.ToString() : "";
-
             var loginExist = state?.User?.Identity?.Name;
             if (loginExist == null)
             {

@@ -37,17 +37,6 @@
             </div>
 
         </div>
-
-        @*        <RadzenCheckBox Placeholder="" />
-        *@
-        @*        <span class="name">@product[0].name</span>
-        <span class="price">@product[0].price</span>
-        <span class="color">@product[0].color</span>
-        <span class="material">@product[0].material</span>
-        <span class="type-name">@product[0].type?.name</span>
-        <span class="stock">@product[0].stock</span>
-        <span class="comments">@product[0].comments</span>
-        *@
     </div>
 </div>
 @code {
@@ -56,7 +45,6 @@
     public string? color = "";
     public string? material = "";
     public string? type = "";
-    //public string? type = new ConnectDB.Type();
     public bool? stack = true;
     public string? comment = "";
     public string? price = "";
@@ -64,9 +52,6 @@
 
     protected override void OnInitialized()
     {
-        //        selectedEmployees = employee.Take(1).ToList();*/
-
-        //Guid idproduct = new Guid(id);
         base.OnInitialized();
         types = Data.GetDataClass.getTypes().ToList();
     }
@@ -90,24 +75,18 @@
                     type = selectType[0],
                     stock = this.stack,
                     price = Convert.ToInt32(this.price)
-
                 };
             db.Add(product);
             db.SaveChanges();
             navigationManager.NavigateTo("/");
-
         }
-
     }
     public void goToMain()
     {
         navigationManager.NavigateTo("/");
-
     }
     public void onSelectType()
     {
-        //selectType =
-        //selectedEmployees = employee.Take(1).ToList();*/
 
     }
     [Parameter]

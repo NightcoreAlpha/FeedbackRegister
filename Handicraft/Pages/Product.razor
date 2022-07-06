@@ -32,16 +32,13 @@
 </div>
 
 @code {
-
     List<Data.ConnectDB.Product> product = new List<Data.ConnectDB.Product>();
-
     protected override void OnInitialized()
     {
         Guid idproduct = new Guid(id);
         base.OnInitialized();
         product = Data.GetDataClass.getProduct(idproduct);
     }
-
     [Parameter]
     public string id { get; set; }
 }

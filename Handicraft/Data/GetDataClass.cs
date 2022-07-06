@@ -14,10 +14,14 @@ namespace Handicraft.Data
         public static List<ConnectDB.Type> getTypes()
         {
             List<ConnectDB.Type>? types = new List<ConnectDB.Type>();
-            using (var db = new ConnectContext("postgres", "postgres"))
+            try
             {
-                types = db.types?.ToList();
+                using (var db = new ConnectContext("postgres", "postgres"))
+                {
+                    types = db.types?.ToList();
+                }
             }
+            catch (Exception ex) { }
             return types;
         }
         public static List<Product> getProducts()
@@ -63,32 +67,43 @@ namespace Handicraft.Data
         public static List<User> GetUserData(string login)
         {
             List<User> user = new List<User>();
-            using (var db = new ConnectContext("", ""))
+            try
             {
-                user = db?.users?.Where(x => x.login == login).ToList();
-                var mess = "";
+                using (var db = new ConnectContext("", ""))
+                {
+                    user = db?.users?.Where(x => x.login == login).ToList();
+                    var mess = "";
+                }
             }
+            catch (Exception ex) { }
             return user;
-
         }
         public static List<User> GetUserData(string login, string password)
         {
             List<User> user = new List<User>();
-            using (var db = new ConnectContext("", ""))
+            try
             {
-                user = db?.users?.Where(x => x.login == login && x.password == password).ToList();
-                var mess = "";
+                using (var db = new ConnectContext("", ""))
+                {
+                    user = db?.users?.Where(x => x.login == login && x.password == password).ToList();
+                    var mess = "";
+                }
             }
+            catch (Exception ex) { }
             return user;
         }
         public static List<User> GetUserData(Guid id)
         {
             List<User> user = new List<User>();
-            using (var db = new ConnectContext("", ""))
+            try
             {
-                user = db?.users?.Where(x => x.id == id).ToList();
-                var mess = "";
+                using (var db = new ConnectContext("", ""))
+                {
+                    user = db?.users?.Where(x => x.id == id).ToList();
+                    var mess = "";
+                }
             }
+            catch (Exception ex) { }
             return user;
         }
         //public static List<ConnectDB.Type> GetType()
@@ -101,68 +116,5 @@ namespace Handicraft.Data
         //    }
         //    return types;
         //}
-        /*public List<Employee>? employee = new List<Employee>();
-        public List<Role>? role = new List<Role>();
-        public List<Customer>? customers = new List<Customer>();
-        public List<Section>? sectionList = new List<Section>();
-        public List<Status>? statusList = new List<Status>();
-        public List<Priority>? priorityList = new List<Priority>();
-        public List<Employee>? owner_gkiList = new List<Employee>();*/
-        /*public List<Employee> getEmployee(Guid id)
-        {
-            using(var db = new ConnectContext())
-            {
-                employee = db.employees?.Where(x => x.id == id).ToList();
-            }
-            return employee;
-        }
-        public List<Role> getRoleList()
-        {
-            using (var db = new ConnectContext())
-            {
-                role = db.roles?.ToList();
-            }
-            return role;
-        }
-        public List<Customer> getCustomerList()
-        {
-            using (var db = new ConnectContext())
-            {
-                customers = db.customers?.Include(x=>x.company).ToList();
-            }
-            return customers;
-        }
-        public List<Section> getSectionsList()
-        {
-            using (var db = new ConnectContext())
-            {
-                sectionList = db.sections.ToList();
-            }
-            return sectionList;
-        }
-        public List<Status> getStatusList()
-        {
-            using (var db = new ConnectContext())
-            {
-                statusList = db.status.ToList();
-            }
-            return statusList;
-        }
-        public List<Priority> getPriorityList()
-        {
-            using (var db = new ConnectContext())
-            {
-                priorityList = db.priority.ToList();
-            }
-            return priorityList;
-        }
-        public List<Employee> getOwner_gkiList()
-        {
-            using (var db = new ConnectContext())
-            {
-                owner_gkiList = db.employees.ToList();
-            }
-            return owner_gkiList;
-        }*/
     }
 }

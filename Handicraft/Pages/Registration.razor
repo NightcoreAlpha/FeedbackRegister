@@ -8,16 +8,6 @@
 @inject AuthenticationStateProvider Provider
 @inject NavigationManager navigationManager
 
-
-@*<div class="col-lg-6 col-xl-4 p-3">
-    <RadzenCard>
-        <h4 class="mb-4">Error</h4>
-        <RadzenButton Text="Show error notification" Class="w-100"
-                      ButtonStyle="ButtonStyle.Danger"
-                      Click=@(args => ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error Summary", Detail = "Error Detail", Duration = 4000 })) />
-    </RadzenCard>
-</div>*@
-
 <div class="central-container">
     <div>
         <button class="invisible-wall"></button>
@@ -31,15 +21,9 @@
             <RadzenPassword Placeholder="" @bind-Value=@password />
             <h5 class="mb-2 mt-2">Подтверждение пароля</h5>
             <RadzenPassword Placeholder="" @bind-Value=@password2 />
-@*            <RadzenButton class="oi oi- blue-button reg-button" Text="Зарегистрироваться" Click="@registration" />
-*@                        <p class="my-4">
-@*                <RadzenButton class="oi oi- blue-button reg-button" Click=@registration>Зарегистрироваться</RadzenButton>
-*@                                <button class="btn btn-primary" onclick=@registration>Зарегистрироваться</button>
-
+            <p class="my-4">
+                <button class="btn btn-primary" onclick=@registration>Зарегистрироваться</button>
             </p>
-            @*            <p class="my-4">
-            <button type="submit" class="btn btn-primary" onclick=@GetUser>Log in</button>
-            </p>*@
             <RadzenNotification />
         </RadzenCard>
         <DataAnnotationsValidator />
@@ -55,26 +39,13 @@
     public string? email { get; set; }
     public string? telefon { get; set; }
     public string? contacts { get; set; }
-
-    //List<Data.ConnectDB.Product> product = new List<Data.ConnectDB.Product>();
-
     protected override void OnInitialized()
     {
-        //Guid idproduct = new Guid(id);
         base.OnInitialized();
-        //product = Data.GetDataClass.getProduct(idproduct);
     }
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    var state = await Provider.GetAuthenticationStateAsync();
-    //    var test = (state?.User?.Identity?.Name ?? "Sorry");
-
-    //    //base.OnInitializedAsync();
-    //}
     public void registration()
     {
         string? messageError = "";
-        //string? message = "Опа, ошибка!1";
         if (password?.Length < 6)
             messageError = "Слишком короткий пароль, введите минимум 6 символов";
         if (password?.Length > 15)
@@ -85,8 +56,6 @@
             messageError = "Введите пароль";
         if (login == null)
             messageError = "Введите логин";
-        //if (name == null)
-        //    messageError = "Введите имя";
         if (messageError != "")
         {
             var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
@@ -118,49 +87,24 @@
                     db.users.Add(newUser);
                     db.SaveChanges();
                     navigationManager.NavigateTo("/mycabinet/" + newUser.id.ToString(), true);
-
                 }
                 catch (Exception ex) { }
             }
-
         }
-
     }
-    //[Parameter]
-    //public string id { get; set; }
     void ShowNotification(NotificationMessage message)
     {
         NotificationService.Notify(message);
     }
     public async void GetUser()
     {
-        /*if (GetDataClass.GetUserData(LoginData.UserName, LoginData.Password).Count < 1)
-        {
-            ((TokenAuthenticationStateProvider)Provider).MakeUserAnonymous();
-        }*/
         var state = await Provider.GetAuthenticationStateAsync();
-
         var loginExist = state?.User?.Identity?.Name;
-        //if (loginExist == null)
         if (GetDataClass.GetUserData(LoginData.UserName).Count < 1)
         {
-
             string messageError = "Не верные логин/пароль или пользователя не существует";
             var message = new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Ошибка при регистрации:", Detail = @messageError, Duration = 4000 };
             NotificationService.Notify(message);
         }
-    }
-    public class GetDataUser
-    {
-        List<User> user { get; set; }
-
-        /*public void GetDataUser()
-        {
-            using (var db = new ConnectContext())
-            {
-                user = db?.users?.Where(x => x.login == LoginData.UserName && x.password == LoginData.Password).ToList();
-                var mess = "";
-            }
-        }*/
     }
 }
